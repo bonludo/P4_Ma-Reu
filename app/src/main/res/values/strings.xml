@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">P4</string>
+    <string name="image_of_the_room">image of the reunion</string>
+    <string name="delete_meeting">delete_meeting</string>
+    <string name="mail_of_participant">mail_of_participant</string>
+    <string name="topic_hour_room">topic_hour_room</string>
+    <string name="add_new_meeting">add_new_meeting</string>
+    <string name="participant">Participant</string>
 </resources>

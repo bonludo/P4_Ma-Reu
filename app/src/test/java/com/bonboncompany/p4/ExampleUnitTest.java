@@ -17,24 +17,27 @@ public class ExampleUnitTest {
 
     @Test
     public void meeting_list() {
+        assertFalse(true);
     }
 
     @Test
     public void add_meeting() {
+        assertFalse(true);
     }
 
     @Test
     public void delete_meeting() {
-        
+        assertFalse(true);
     }
 
     @Test
     public void filter_meetings_by_date() {
-
+        assertFalse(true);
     }
 
     @Test
     public void filter_meetings_by_hour() {
+        assertFalse(true);
     }
 
     //Ajout d’une réunion.
