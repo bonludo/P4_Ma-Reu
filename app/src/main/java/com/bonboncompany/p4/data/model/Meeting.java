@@ -7,13 +7,13 @@ public class Meeting {
 
     private final long id;
     private final String meetingTopic;
-    int time;
+    LocalTime time;
     private final Room room;
     private final String participantMail;
 
     public Meeting(long id,
                    String meetingTopic,
-                   int time,
+                   LocalTime time,
                    Room room,
                    String participantMail
     ) {
@@ -29,7 +29,7 @@ public class Meeting {
         return id;
     }
 
-    public int getTime() {
+    public LocalTime getTime() {
         return time;
     }
 

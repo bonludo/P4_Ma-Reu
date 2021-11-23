@@ -22,6 +22,7 @@ public class MeetingViewStateItem {
     }
 
     public long getId() {
+
         return id;
     }
 
@@ -30,6 +31,7 @@ public class MeetingViewStateItem {
     }
 
     public String getParticipantMail() {
+
         return participantMail;
     }
 

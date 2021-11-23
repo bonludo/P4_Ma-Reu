@@ -9,6 +9,8 @@ import com.bonboncompany.p4.data.MeetingRepository;
 import com.bonboncompany.p4.data.model.Room;
 import com.bonboncompany.p4.util.SingleLiveEvent;
 
+import java.time.LocalTime;
+
 public class AddMeetingViewModel extends ViewModel {
 
     private final MeetingRepository meetingRepository ;
@@ -33,7 +35,7 @@ public class AddMeetingViewModel extends ViewModel {
     //method creation
     public void onAddButtonClicked(
             @NonNull String topic,
-            @Nullable int time ,
+            @Nullable LocalTime time ,
             @Nullable Room room,
             @NonNull String participantMail
     ) {
