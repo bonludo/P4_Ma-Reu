@@ -1,7 +1,7 @@
 package com.bonboncompany.p4.ui.list;
 
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
@@ -14,24 +14,25 @@ import java.util.List;
 
 public class MeetingViewModel extends ViewModel {
 
-    private final MeetingRepository meetingRepository;
+    private MeetingRepository meetingRepository = new MeetingRepository();
+
+    private final LiveData<String> meetingList = Transformations.map(meetingRepository.getMeetingsLiveData(), new Function<List<Meeting>, List<Meeting>>() {
+        @Override
+        public List<String> apply(List<Meeting> input) {
+            return input;
+        }
+    })
 
     public MeetingViewModel(MeetingRepository meetingRepository) {
         this.meetingRepository = meetingRepository;
     }
 
-    public LiveData<List<MeetingViewStateItem>> getMeetingViewStateItemLiveData() {
-        return new MeetingViewStateItem(
-                getMeetingViewStateItemLiveData()
 
+    public String infoMeeting(Meeting meeting) {
+        String topic = meeting.getMeetingTopic();
+        LocalTime hour = meeting.getTime();
+        Room room = meeting.getRoom();
 
-        )
-    }
-
-    public String infoMeeting() {
-        String topic = meeting.get;
-        LocalTime hour = null;
-        Room room = null;
         return topic + " - " + hour + " - " + room;
     }
 

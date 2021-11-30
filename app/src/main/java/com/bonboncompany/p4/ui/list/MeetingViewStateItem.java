@@ -1,7 +1,5 @@
 package com.bonboncompany.p4.ui.list;
 
-import androidx.annotation.NonNull;
-
 import com.bonboncompany.p4.data.model.Room;
 
 import java.time.LocalTime;
@@ -11,13 +9,19 @@ public class MeetingViewStateItem {
 
     private final long id;
 
-    private final String topic;
+    private final String meetingTopic;
+
+    private final LocalTime time;
+
+    private final Room room;
 
     private final String participantMail;
 
-    public MeetingViewStateItem(long id, String topic,  String participantMail) {
+    public MeetingViewStateItem(long id, String meetingTopic, LocalTime time, Room room, String participantMail) {
         this.id = id;
-        this.topic = topic;
+        this.meetingTopic = meetingTopic;
+        this.time = time;
+        this.room = room;
         this.participantMail = participantMail;
     }
 
@@ -26,8 +30,8 @@ public class MeetingViewStateItem {
         return id;
     }
 
-    public String getTopic() {
-        return topic;
+    public String getMeetingTopic() {
+        return meetingTopic;
     }
 
     public String getParticipantMail() {
@@ -35,27 +39,34 @@ public class MeetingViewStateItem {
         return participantMail;
     }
 
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MeetingViewStateItem that = (MeetingViewStateItem) o;
-        return id == that.id &&
-                Objects.equals(topic, that.topic) &&
-                Objects.equals(participantMail, that.participantMail);
+        return id == that.id && Objects.equals(meetingTopic, that.meetingTopic) && Objects.equals(time, that.time) && room == that.room && Objects.equals(participantMail, that.participantMail);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, topic, participantMail);
+        return Objects.hash(id, meetingTopic, time, room, participantMail);
     }
 
-    @NonNull
     @Override
     public String toString() {
         return "MeetingViewStateItem{" +
                 "id=" + id +
-                ", topic='" + topic + '\'' +
+                ", meetingTopic='" + meetingTopic + '\'' +
+                ", time=" + time +
+                ", room=" + room +
                 ", participantMail='" + participantMail + '\'' +
                 '}';
     }

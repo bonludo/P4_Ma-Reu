@@ -58,7 +58,7 @@ public class MeetingAdapter extends ListAdapter<MeetingViewStateItem, MeetingAda
 
         public void bind(MeetingViewStateItem item, OnMeetingClickedListener listener) {
             itemView.setOnClickListener(v -> listener.onMeetingClicked(item.getId()));
-            info_meeting.setText(item.getTopic());
+            info_meeting.setText(item.getMeetingTopic());
             mail_participant.setText(item.getParticipantMail());
            // deleteImageView.setOnClickListener(v -> listener.onDeleteNeighbourClicked(item.getId()));
         }

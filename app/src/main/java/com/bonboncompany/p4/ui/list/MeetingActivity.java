@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.bonboncompany.p4.R;
+import com.bonboncompany.p4.data.model.Meeting;
 import com.bonboncompany.p4.ui.ViewModelFactory;
 import com.bonboncompany.p4.ui.add.AddMeetingActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,6 +36,7 @@ public class MeetingActivity extends AppCompatActivity implements OnMeetingClick
 
     private void initViewModel() {
         viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MeetingViewModel.class);
+        viewModel.;
     }
 
     @Override
