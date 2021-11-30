@@ -10,25 +10,31 @@ import com.bonboncompany.p4.data.model.Meeting;
 import com.bonboncompany.p4.data.model.Room;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MeetingViewModel extends ViewModel {
 
     private MeetingRepository meetingRepository = new MeetingRepository();
 
-    private final LiveData<String> meetingList = Transformations.map(meetingRepository.getMeetingsLiveData(), new Function<List<Meeting>, List<Meeting>>() {
-        @Override
-        public List<String> apply(List<Meeting> input) {
-            return input;
+    private final LiveData<MeetingViewStateItem> meetingList = Transformations.map(
+        meetingRepository.getMeetingsLiveData(), new Function<List<Meeting>, List<MeetingViewStateItem>>() {
+            @Override
+            public List<MeetingViewStateItem> apply(List<Meeting> input) {
+                List<MeetingViewStateItem> meetingViewStateItems = new ArrayList<>();
+
+                meetingViewStateItems.add()
+                return input;
+            }
         }
-    })
+    );
 
     public MeetingViewModel(MeetingRepository meetingRepository) {
         this.meetingRepository = meetingRepository;
     }
 
 
-    public String infoMeeting(Meeting meeting) {
+    public String getMeetingTopic(Meeting meeting) {
         String topic = meeting.getMeetingTopic();
         LocalTime hour = meeting.getTime();
         Room room = meeting.getRoom();

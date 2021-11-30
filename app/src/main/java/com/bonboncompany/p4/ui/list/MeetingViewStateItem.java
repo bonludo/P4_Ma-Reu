@@ -1,5 +1,8 @@
 package com.bonboncompany.p4.ui.list;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+
 import com.bonboncompany.p4.data.model.Room;
 
 import java.time.LocalTime;
@@ -11,22 +14,19 @@ public class MeetingViewStateItem {
 
     private final String meetingTopic;
 
-    private final LocalTime time;
+    private final String participants;
 
-    private final Room room;
+    @ColorRes
+    private final int imageColorRes;
 
-    private final String participantMail;
-
-    public MeetingViewStateItem(long id, String meetingTopic, LocalTime time, Room room, String participantMail) {
+    public MeetingViewStateItem(long id, String meetingTopic, String participants, int imageColorRes) {
         this.id = id;
         this.meetingTopic = meetingTopic;
-        this.time = time;
-        this.room = room;
-        this.participantMail = participantMail;
+        this.participants = participants;
+        this.imageColorRes = imageColorRes;
     }
 
     public long getId() {
-
         return id;
     }
 
@@ -34,17 +34,23 @@ public class MeetingViewStateItem {
         return meetingTopic;
     }
 
-    public String getParticipantMail() {
-
-        return participantMail;
+    public String getParticipants() {
+        return participants;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public int getImageColorRes() {
+        return imageColorRes;
     }
 
-    public Room getRoom() {
-        return room;
+    @NonNull
+    @Override
+    public String toString() {
+        return "MeetingViewStateItem{" +
+            "id=" + id +
+            ", meetingTopic='" + meetingTopic + '\'' +
+            ", participants='" + participants + '\'' +
+            ", imageColorRes=" + imageColorRes +
+            '}';
     }
 
     @Override
@@ -52,22 +58,14 @@ public class MeetingViewStateItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MeetingViewStateItem that = (MeetingViewStateItem) o;
-        return id == that.id && Objects.equals(meetingTopic, that.meetingTopic) && Objects.equals(time, that.time) && room == that.room && Objects.equals(participantMail, that.participantMail);
+        return id == that.id &&
+            imageColorRes == that.imageColorRes &&
+            Objects.equals(meetingTopic, that.meetingTopic) &&
+            Objects.equals(participants, that.participants);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, meetingTopic, time, room, participantMail);
-    }
-
-    @Override
-    public String toString() {
-        return "MeetingViewStateItem{" +
-                "id=" + id +
-                ", meetingTopic='" + meetingTopic + '\'' +
-                ", time=" + time +
-                ", room=" + room +
-                ", participantMail='" + participantMail + '\'' +
-                '}';
+        return Objects.hash(id, meetingTopic, participants, imageColorRes);
     }
 }

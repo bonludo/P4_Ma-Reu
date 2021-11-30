@@ -7,7 +7,6 @@ import com.bonboncompany.p4.data.model.Room;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class MeetingRepository {
     }
 
     private void DUMMY_MEETINGliveData() {
-        addMeeting("dérapage",LocalTime.of(13, 10),Room.Toad,"george");
+        addMeeting("dérapage",LocalTime.of(13, 10),Room.MARIO.getRoomNumber(),"george");
 
         meetingsLiveData.setValue(meetings);
 
