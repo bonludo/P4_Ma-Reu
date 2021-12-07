@@ -16,13 +16,15 @@ public class MeetingRepository {
 
     private long id = 0;
     List<Meeting> meetings;
+    private List<Meeting> DUMMY_MEETINGliveData;
 
     public MeetingRepository() {
-
-        DUMMY_MEETINGliveData();
     }
 
     public MutableLiveData<List<Meeting>> getMeetingsLiveData() {
+
+        meetingsLiveData.setValue(DUMMY_MEETINGliveData);
+
         return meetingsLiveData;
     }
 
@@ -64,9 +66,8 @@ public class MeetingRepository {
     }
 
     private void DUMMY_MEETINGliveData() {
-        addMeeting("dérapage",LocalTime.of(13, 10),Room.MARIO.getRoomNumber(),"george");
 
-        meetingsLiveData.setValue(meetings);
+        addMeeting("dérapage",LocalTime.of(13, 10),Room.MARIO,"george");
 
     }
 }
