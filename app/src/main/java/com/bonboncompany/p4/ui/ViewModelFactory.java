@@ -23,8 +23,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             synchronized (ViewModelFactory.class) {
                 if (factory == null) {
                     factory = new ViewModelFactory(
-                            new MeetingRepository(
-                            )
+                            new MeetingRepository()
                     );
                 }
             }

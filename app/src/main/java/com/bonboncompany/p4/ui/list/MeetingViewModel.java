@@ -15,29 +15,27 @@ import java.util.List;
 
 public class MeetingViewModel extends ViewModel {
 
-    private MeetingRepository meetingRepository;
+    public LiveData<List<MeetingViewStateItem>> meetingList;
 
-    public LiveData<List<MeetingViewStateItem>> meetingList = Transformations.map(
+    public MeetingViewModel(MeetingRepository meetingRepository) {
+
+        meetingList = Transformations.map(
             meetingRepository.getMeetingsLiveData(), new Function<List<Meeting>, List<MeetingViewStateItem>>() {
                 @Override
                 public List<MeetingViewStateItem> apply(List<Meeting> meetings) {
                     List<MeetingViewStateItem> meetingViewStateItems = new ArrayList<>();
                     for (Meeting meeting : meetings) {
                         meetingViewStateItems.add(new MeetingViewStateItem(
-                                        meeting.getId(),
-                                        getMeetingInfo(meeting),
-                                        meeting.getParticipantMail(),
-                                        meeting.getRoom().getColor()
-                                )
+                                meeting.getId(),
+                                getMeetingInfo(meeting),
+                                meeting.getParticipantMail(),
+                                meeting.getRoom().getColor()
+                            )
                         );
                     }
                     return meetingViewStateItems;
                 }
             });
-
-
-    public MeetingViewModel(MeetingRepository meetingRepository) {
-        this.meetingRepository = meetingRepository;
     }
 
 

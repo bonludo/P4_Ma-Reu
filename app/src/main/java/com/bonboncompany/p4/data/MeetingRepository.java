@@ -2,6 +2,7 @@ package com.bonboncompany.p4.data;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.bonboncompany.p4.BuildConfig;
 import com.bonboncompany.p4.data.model.Meeting;
 import com.bonboncompany.p4.data.model.Room;
 
@@ -15,16 +16,14 @@ public class MeetingRepository {
     private final MutableLiveData<List<Meeting>> meetingsLiveData = new MutableLiveData<>(new ArrayList<>());
 
     private long id = 0;
-    List<Meeting> meetings;
-    private List<Meeting> DUMMY_MEETINGliveData;
 
     public MeetingRepository() {
+        if (BuildConfig.DEBUG) {
+            addMeeting("dérapage", LocalTime.of(13, 10), Room.MARIO, "george");
+        }
     }
 
     public MutableLiveData<List<Meeting>> getMeetingsLiveData() {
-
-        meetingsLiveData.setValue(DUMMY_MEETINGliveData);
-
         return meetingsLiveData;
     }
 
@@ -63,11 +62,5 @@ public class MeetingRepository {
             }
         }
         meetingsLiveData.setValue(meetings);
-    }
-
-    private void DUMMY_MEETINGliveData() {
-
-        addMeeting("dérapage",LocalTime.of(13, 10),Room.MARIO,"george");
-
     }
 }
