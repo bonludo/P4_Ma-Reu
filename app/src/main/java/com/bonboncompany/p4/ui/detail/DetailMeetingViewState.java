@@ -2,17 +2,19 @@ package com.bonboncompany.p4.ui.detail;
 
 import com.bonboncompany.p4.data.model.Room;
 
+import java.time.LocalTime;
 import java.util.Objects;
 
-public class MeetingDetailViewState {
+public class DetailMeetingViewState {
 
     private final String meetingTopic;
-    int time;
+    LocalTime time;
     private final Room room;
     private final String participantMail;
 
-    public MeetingDetailViewState(String meetingTopic, Room room, String participantMail) {
+    public DetailMeetingViewState(String meetingTopic,LocalTime time, Room room, String participantMail) {
         this.meetingTopic = meetingTopic;
+        this.time = time;
         this.room = room;
         this.participantMail = participantMail;
     }
@@ -21,11 +23,8 @@ public class MeetingDetailViewState {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MeetingDetailViewState that = (MeetingDetailViewState) o;
-        return time == that.time &&
-                Objects.equals(meetingTopic, that.meetingTopic) &&
-                Objects.equals(room, that.room) &&
-                Objects.equals(participantMail, that.participantMail);
+        DetailMeetingViewState that = (DetailMeetingViewState) o;
+        return time == that.time && Objects.equals(meetingTopic, that.meetingTopic) && room == that.room && Objects.equals(participantMail, that.participantMail);
     }
 
     @Override
@@ -41,5 +40,20 @@ public class MeetingDetailViewState {
                 ", room=" + room +
                 ", participantMail='" + participantMail + '\'' +
                 '}';
+    }
+
+    public String getMeetingTopic() {
+        return meetingTopic;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+    public Room getRoom() {
+        return room;
+    }
+
+    public String getParticipantMail() {
+        return participantMail;
     }
 }

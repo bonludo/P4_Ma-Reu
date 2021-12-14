@@ -12,6 +12,7 @@ import com.bonboncompany.p4.R;
 import com.bonboncompany.p4.data.model.Meeting;
 import com.bonboncompany.p4.ui.ViewModelFactory;
 import com.bonboncompany.p4.ui.add.AddMeetingActivity;
+import com.bonboncompany.p4.ui.detail.DetailMeetingActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MeetingActivity extends AppCompatActivity implements OnMeetingClickedListener {
@@ -33,12 +34,18 @@ public class MeetingActivity extends AppCompatActivity implements OnMeetingClick
         recyclerView.setAdapter(adapter);
         viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MeetingViewModel.class);
         viewModel.meetingList.observe(this, meetingViewStateItems -> adapter.submitList(meetingViewStateItems));
-
-
     }
+
 
     @Override
     public void onMeetingClicked(long meetingId) {
-//todo intent to detailMeeting
+        startActivity(DetailMeetingActivity.navigate(this,meetingId));
     }
+
+    //@Override
+//    public void onDeleteMeetingClicked(long meetingId) {
+//    viewModel.onDeleteMeetingClicked(meetingId);
+//    }
+
+
 }

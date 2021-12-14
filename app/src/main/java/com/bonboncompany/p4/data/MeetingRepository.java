@@ -19,7 +19,9 @@ public class MeetingRepository {
 
     public MeetingRepository() {
         if (BuildConfig.DEBUG) {
-            addMeeting("dérapage", LocalTime.of(13, 10), Room.MARIO, "george");
+            addMeeting("dérapage", LocalTime.of(13, 10), Room.LUIGI, "lucas@yahoo.fr");
+            addMeeting("Vitesse", LocalTime.of(10, 10), Room.BOWSER, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+            addMeeting("Piège", LocalTime.of(11, 10), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
         }
     }
 

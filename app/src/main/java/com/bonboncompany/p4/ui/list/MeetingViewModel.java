@@ -15,29 +15,29 @@ import java.util.List;
 
 public class MeetingViewModel extends ViewModel {
 
+
     public LiveData<List<MeetingViewStateItem>> meetingList;
+
 
     public MeetingViewModel(MeetingRepository meetingRepository) {
 
         meetingList = Transformations.map(
-            meetingRepository.getMeetingsLiveData(), new Function<List<Meeting>, List<MeetingViewStateItem>>() {
-                @Override
-                public List<MeetingViewStateItem> apply(List<Meeting> meetings) {
+                meetingRepository.getMeetingsLiveData(), meetings -> {
                     List<MeetingViewStateItem> meetingViewStateItems = new ArrayList<>();
                     for (Meeting meeting : meetings) {
                         meetingViewStateItems.add(new MeetingViewStateItem(
-                                meeting.getId(),
-                                getMeetingInfo(meeting),
-                                meeting.getParticipantMail(),
-                                meeting.getRoom().getColor()
-                            )
+                                        meeting.getId(),
+                                        MeetingViewModel.this.getMeetingInfo(meeting),
+                                        meeting.getParticipantMail(),
+                                        meeting.getRoom().getColor()
+                                )
                         );
                     }
                     return meetingViewStateItems;
-                }
-            });
-    }
+                });
 
+
+    }
 
     public String getMeetingInfo(Meeting meeting) {
         String topic = meeting.getMeetingTopic();
@@ -46,4 +46,8 @@ public class MeetingViewModel extends ViewModel {
 
         return topic + " - " + hour + " - " + room;
     }
+
+//    public void onDeleteMeetingClicked(long meetingId) {
+//        meetingRepository.deleteMeeting(meetingId);
+//    }
 }

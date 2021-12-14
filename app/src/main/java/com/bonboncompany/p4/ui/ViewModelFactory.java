@@ -12,11 +12,6 @@ import com.bonboncompany.p4.ui.list.MeetingViewModel;
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private static ViewModelFactory factory;
-    private final MeetingRepository meetingRepository;
-
-    public ViewModelFactory(@NonNull MeetingRepository meetingRepository) {
-        this.meetingRepository = meetingRepository;
-    }
 
     public static ViewModelFactory getInstance() {
         if (factory == null) {
@@ -32,6 +27,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         return factory;
     }
 
+    private final MeetingRepository meetingRepository;
+
+    public ViewModelFactory(@NonNull MeetingRepository meetingRepository) {
+        this.meetingRepository = meetingRepository;
+    }
     @NonNull
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {

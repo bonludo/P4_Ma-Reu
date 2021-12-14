@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bonboncompany.p4.R;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 public class MeetingAdapter extends ListAdapter<MeetingViewStateItem, MeetingAdapter.ViewHolder> {
 
@@ -36,33 +38,38 @@ public class MeetingAdapter extends ListAdapter<MeetingViewStateItem, MeetingAda
 
     @Override
     public void onBindViewHolder(MeetingAdapter.ViewHolder holder, int position) {
-    holder.bind(getItem(position),listener);
+        holder.bind(getItem(position), listener);
     }
     //Affichage de la ligne
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView info_meeting;
-        public TextView mail_participant;
-        public ImageView room_avatar;
-        public ImageButton delete;
+        public TextView info_meetingTextView;
+        public TextView mail_participantTextView;
+        public ImageView room_avatarImageView;
+        public ImageButton deleteImageView;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            info_meeting = itemView.findViewById(R.id.item_list_info);
-            mail_participant = itemView.findViewById(R.id.item_list_mail_participant);
-            room_avatar = itemView.findViewById(R.id.item_list_room_avatar);
-            delete = itemView.findViewById(R.id.item_list_delete_button);
+            info_meetingTextView = itemView.findViewById(R.id.item_list_info);
+            mail_participantTextView = itemView.findViewById(R.id.item_list_mail_participant);
+            room_avatarImageView = itemView.findViewById(R.id.item_list_room_avatar);
+            deleteImageView = itemView.findViewById(R.id.item_list_delete_button);
         }
 
         public void bind(MeetingViewStateItem item, OnMeetingClickedListener listener) {
             itemView.setOnClickListener(v -> listener.onMeetingClicked(item.getId()));
-            info_meeting.setText(item.getMeetingTopic());
-            mail_participant.setText(item.getParticipants());
-            //room_avatar.setColorFilter(item.getImageColorRes());
-            room_avatar.setBackgroundResource(item.getImageColorRes());
-           // deleteImageView.setOnClickListener(v -> listener.onDeleteNeighbourClicked(item.getId()));
+            info_meetingTextView.setText(item.getMeetingTopic());
+            mail_participantTextView.setText(item.getParticipants());
+            //room_avatarImageView.setColorFilter(item.getImageColorRes());
+            room_avatarImageView.setBackgroundResource(item.getImageColorRes());
+            Glide.with(room_avatarImageView)
+                    .load(item.getImageColorRes())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(room_avatarImageView);
+
+            //deleteImageView.setOnClickListener(v -> listener.onDeleteMeetingClicked(item.getId()));
         }
 
     }
