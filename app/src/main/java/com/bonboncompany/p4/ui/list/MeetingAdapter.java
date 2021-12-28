@@ -1,5 +1,7 @@
 package com.bonboncompany.p4.ui.list;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,20 +65,17 @@ public class MeetingAdapter extends ListAdapter<MeetingViewStateItem, MeetingAda
             itemView.setOnClickListener(v -> listener.onMeetingClicked(item.getId()));
             info_meetingTextView.setText(item.getMeetingTopic());
             mail_participantTextView.setText(item.getParticipants());
-            //room_avatarImageView.setColorFilter(item.getImageColorRes());
-            room_avatarImageView.setBackgroundResource(item.getImageColorRes());
-            Glide.with(room_avatarImageView)
-                    .load(item.getImageColorRes())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(room_avatarImageView);
-
-            //deleteImageView.setOnClickListener(v -> listener.onDeleteMeetingClicked(item.getId()));
+            room_avatarImageView.setImageTintList(
+                    ColorStateList.valueOf(
+                    ContextCompat.getColor(itemView.getContext(), item.getImageColorRes())
+                    )
+            );
+            deleteImageView.setOnClickListener(v -> listener.onDeleteMeetingClicked(item.getId()));
         }
 
     }
 
     private static class ListMeetingItemCallback extends DiffUtil.ItemCallback<MeetingViewStateItem> {
-
         @Override
         public boolean areItemsTheSame(@NonNull MeetingViewStateItem oldItem, @NonNull MeetingViewStateItem newItem) {
             return oldItem.getId() == newItem.getId();

@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel;
 import com.bonboncompany.p4.data.MeetingRepository;
 import com.bonboncompany.p4.data.model.Meeting;
 
+import java.util.Locale;
+
 public class DetailMeetingViewModel extends ViewModel {
 
     private MeetingRepository meetingRepository;
@@ -24,35 +26,26 @@ public class DetailMeetingViewModel extends ViewModel {
     private DetailMeetingViewState displayMeeting(Meeting meeting) {
         return new DetailMeetingViewState(
                 meeting.getMeetingTopic(),
-                meeting.getTime(),
-                meeting.getRoom(),
+                meeting.getTime().toString(),
+                capitalize(meeting.getRoom().toString()),
                 meeting.getParticipantMail());
+    }
+
+    private String capitalize(String name) {
+        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
     }
 
     public void getMeetingById(long meetingId) {
 
         MeetingDetailViewStateMutableLiveData.addSource(meetingRepository.getMeetingsLiveData(), meetings -> {
 
-            Meeting foundMeeting = null;
+            MeetingDetailViewStateMutableLiveData.setValue(displayMeeting(meetingRepository.getMeetingById(meetingId)));
 
-            for (Meeting meeting : meetings) {
-                if (meetingId == meeting.getId()) {
-                    foundMeeting = meeting;
-                    break;
-                }
-            }
-            if (foundMeeting != null) {
-                MeetingDetailViewStateMutableLiveData.setValue(displayMeeting(foundMeeting));
-            }
         });
     }
-
-    public LiveData<DetailMeetingViewState> meetingDetailViewStateLiveData(){
+    public LiveData<DetailMeetingViewState> meetingDetailViewStateLiveData() {
         return MeetingDetailViewStateMutableLiveData;
     }
-
-
-
 
 
 }

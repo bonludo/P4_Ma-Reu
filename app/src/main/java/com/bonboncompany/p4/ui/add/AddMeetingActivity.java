@@ -10,11 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import com.bonboncompany.p4.R;
+import com.bonboncompany.p4.data.model.Meeting;
 import com.bonboncompany.p4.data.model.Room;
 import com.bonboncompany.p4.ui.ViewModelFactory;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class AddMeetingActivity extends AppCompatActivity {
 
@@ -22,15 +27,15 @@ public class AddMeetingActivity extends AppCompatActivity {
         return new Intent(context, AddMeetingActivity.class);
     }
 
+    private LocalTime time;
+    private Room room;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_add_meeting);
 
-
-
-        ImageView room_avatar = findViewById(R.id.addavatarroom);
-        //Todo Image change when a room is take
 
         AddMeetingViewModel viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(AddMeetingViewModel.class);
 
@@ -39,9 +44,29 @@ public class AddMeetingActivity extends AppCompatActivity {
         TextInputEditText participantEditText = findViewById(R.id.addparticipantmail);
         Button addMeetingButton = findViewById(R.id.addButton);
 
+        TimePicker timePicker = findViewById(R.id.addtimePicker);
         roomSpinner.setAdapter(new ArrayAdapter<Room>(this, android.R.layout.simple_spinner_item, Room.values()));
+        room = (Room) roomSpinner.getSelectedItem();
 
-        //bindAddButton(viewModel,topicEditText,roomSpinner,participantEditText, addMeetingButton);
+        timePicker.setIs24HourView(true); // Mode 24H
+        time = LocalTime.of(timePicker.getHour(), timePicker.getMinute());
+        bindAddButton(viewModel,topicEditText,participantEditText, addMeetingButton);
+
+        viewModel.getCloseActivitySingleLiveEvent().observe(this,aVoid -> finish());
 
     }
+
+    private void bindAddButton (AddMeetingViewModel viewModel,TextInputEditText topicEditText,TextInputEditText participantEditText,Button  addMeetingButton)
+    {
+        addMeetingButton.setOnClickListener(v -> viewModel.onAddButtonClicked(
+                topicEditText.getText().toString(),
+                time,
+                room,
+                participantEditText.getText().toString()
+        ));
+        viewModel.getIsSaveButtonEnabledLiveData().observe(this, isSaveButtonEnabled -> addMeetingButton.setEnabled(isSaveButtonEnabled));
+
+    }
+
+
 }

@@ -18,6 +18,8 @@ public class AddMeetingViewModel extends ViewModel {
     private final SingleLiveEvent<Void> closeActivitySingleLiveEvent = new SingleLiveEvent<>();
 
 
+
+
     public AddMeetingViewModel(@NonNull MeetingRepository meetingRepository) {
         this.meetingRepository = meetingRepository;
     }
@@ -36,12 +38,13 @@ public class AddMeetingViewModel extends ViewModel {
     public void onAddButtonClicked(
             @NonNull String topic,
             @Nullable LocalTime time ,
+
             @Nullable Room room,
             @NonNull String participantMail
     ) {
+
         meetingRepository.addMeeting(topic, time, room, participantMail);
         closeActivitySingleLiveEvent.call();
     }
-
 
 }

@@ -8,11 +8,11 @@ import java.util.Objects;
 public class DetailMeetingViewState {
 
     private final String meetingTopic;
-    LocalTime time;
-    private final Room room;
+    private final String time;
+    private final String room;
     private final String participantMail;
 
-    public DetailMeetingViewState(String meetingTopic,LocalTime time, Room room, String participantMail) {
+    public DetailMeetingViewState(String meetingTopic, String time, String room, String participantMail) {
         this.meetingTopic = meetingTopic;
         this.time = time;
         this.room = room;
@@ -46,10 +46,10 @@ public class DetailMeetingViewState {
         return meetingTopic;
     }
 
-    public LocalTime getTime() {
+    public String  getTime() {
         return time;
     }
-    public Room getRoom() {
+    public String getRoom() {
         return room;
     }
 

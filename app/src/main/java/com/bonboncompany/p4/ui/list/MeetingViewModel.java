@@ -1,5 +1,8 @@
 package com.bonboncompany.p4.ui.list;
 
+import android.app.TimePickerDialog;
+import android.widget.TimePicker;
+
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
@@ -18,8 +21,10 @@ public class MeetingViewModel extends ViewModel {
 
     public LiveData<List<MeetingViewStateItem>> meetingList;
 
+    private final MeetingRepository meetingRepository;
 
     public MeetingViewModel(MeetingRepository meetingRepository) {
+        this.meetingRepository = meetingRepository;
 
         meetingList = Transformations.map(
                 meetingRepository.getMeetingsLiveData(), meetings -> {
@@ -35,8 +40,6 @@ public class MeetingViewModel extends ViewModel {
                     }
                     return meetingViewStateItems;
                 });
-
-
     }
 
     public String getMeetingInfo(Meeting meeting) {
@@ -47,7 +50,9 @@ public class MeetingViewModel extends ViewModel {
         return topic + " - " + hour + " - " + room;
     }
 
-//    public void onDeleteMeetingClicked(long meetingId) {
-//        meetingRepository.deleteMeeting(meetingId);
-//    }
+    //TODO
+
+  public void onDeleteMeetingClicked(long meetingId) {
+        meetingRepository.deleteMeeting(meetingId);
+    }
 }

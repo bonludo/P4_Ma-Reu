@@ -40,13 +40,10 @@ public class DetailMeetingActivity extends AppCompatActivity {
         TextView mailParticipantTextView = findViewById(R.id.mailparticipant_detail);
 
         viewModel.meetingDetailViewStateLiveData().observe(this, detailMeetingViewState -> {
-            topicMeetingTextView.setText(detailMeetingViewState.getMeetingTopic());
-            timeTextView.setText(detailMeetingViewState.getTime());
-            roomTextView.setText(detailMeetingViewState.getRoom());
+            topicMeetingTextView.setText("Sujet : " + detailMeetingViewState.getMeetingTopic());
+            timeTextView.setText("Commence à : " + detailMeetingViewState.getTime());
+            roomTextView.setText("Salle : " + detailMeetingViewState.getRoom());
             mailParticipantTextView.setText(detailMeetingViewState.getParticipantMail());
         });
     }
-
-
-    // todo after detailviewstate
 }

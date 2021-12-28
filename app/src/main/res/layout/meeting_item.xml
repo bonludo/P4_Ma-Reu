@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:contentDescription="@string/topic_hour_room"
         android:text="Reunion - 14h00 - Mario"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -28,7 +28,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="0dp"
         android:contentDescription="@string/mail_of_participant"
         android:maxLines="1"
         android:ellipsize="end"
@@ -46,10 +46,10 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:importantForAccessibility="no"
+        android:src="@drawable/circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/item_list_delete_button"

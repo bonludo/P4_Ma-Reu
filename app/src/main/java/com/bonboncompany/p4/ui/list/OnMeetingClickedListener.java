@@ -4,6 +4,6 @@ public interface OnMeetingClickedListener {
 
     void onMeetingClicked(long meetingId);
 
-   // void onDeleteMeetingClicked(long meetingId);
+   void onDeleteMeetingClicked(long meetingId);
 
 }

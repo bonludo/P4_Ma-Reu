@@ -8,15 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.add.AddMeetingActivity">
 
-    <ImageView
-        android:id="@+id/addavatarroom"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/addmeetingtopicLyt"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -25,13 +16,13 @@
         app:layout_constraintBottom_toTopOf="@+id/addtimeLyt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addavatarroom">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/addmeetingtopic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
+
             android:hint="Sujet de la reunion"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -46,13 +37,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addmeetingtopicLyt">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/addtime"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/addtimeSelection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Horaire"
-            android:inputType="time" />
+            android:hint="Horaire : " />
+
+        <TimePicker
+            android:id="@+id/addtimePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
