@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
 <item android:id="@+id/filter_hour"
     android:title="filtre par heure"
-    app:showAsAction="never"/>
+    android:icon="@drawable/ic_baseline_access_time_24"
+    app:showAsAction="always"/>
 
     <item android:id="@+id/filter_room"
         android:title="filtre par salle"
-        app:showAsAction="never"/>
+        android:icon="@drawable/ic_room_filter_list_24"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/refresh_all"
+        android:title="refresh"
+        android:icon="@drawable/ic_baseline_refresh_24"
+        app:showAsAction="always"/>
 
 </menu>

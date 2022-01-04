@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,7 +39,8 @@ public class AddMeetingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_meeting);
 
 
-        AddMeetingViewModel viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(AddMeetingViewModel.class);
+        AddMeetingViewModel viewModel =
+                new ViewModelProvider(this, ViewModelFactory.getInstance()).get(AddMeetingViewModel.class);
 
         TextInputEditText topicEditText = findViewById(R.id.addmeetingtopic);
         Spinner roomSpinner = findViewById(R.id.spinnerRoom);
@@ -45,8 +48,22 @@ public class AddMeetingActivity extends AppCompatActivity {
         Button addMeetingButton = findViewById(R.id.addButton);
 
         TimePicker timePicker = findViewById(R.id.addtimePicker);
-        roomSpinner.setAdapter(new ArrayAdapter<Room>(this, android.R.layout.simple_spinner_item, Room.values()));
+        roomSpinner.setAdapter(new ArrayAdapter<Room>(this,
+                android.R.layout.simple_spinner_item,
+                Room.values()));
         room = (Room) roomSpinner.getSelectedItem();
+       roomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+           @Override
+           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               viewModel.onRoomSelected((Room) roomSpinner.getSelectedItem());
+           }
+
+           @Override
+           public void onNothingSelected(AdapterView<?> parent) {
+
+           }
+       });
 
         timePicker.setIs24HourView(true); // Mode 24H
         time = LocalTime.of(timePicker.getHour(), timePicker.getMinute());
@@ -56,7 +73,10 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     }
 
-    private void bindAddButton (AddMeetingViewModel viewModel,TextInputEditText topicEditText,TextInputEditText participantEditText,Button  addMeetingButton)
+    private void bindAddButton (AddMeetingViewModel viewModel,
+                                TextInputEditText topicEditText,
+                                TextInputEditText participantEditText,
+                                Button  addMeetingButton)
     {
         addMeetingButton.setOnClickListener(v -> viewModel.onAddButtonClicked(
                 topicEditText.getText().toString(),
@@ -64,7 +84,8 @@ public class AddMeetingActivity extends AppCompatActivity {
                 room,
                 participantEditText.getText().toString()
         ));
-        viewModel.getIsSaveButtonEnabledLiveData().observe(this, isSaveButtonEnabled -> addMeetingButton.setEnabled(isSaveButtonEnabled));
+        viewModel.getIsSaveButtonEnabledLiveData().observe(this,
+                isSaveButtonEnabled -> addMeetingButton.setEnabled(isSaveButtonEnabled));
 
     }
 

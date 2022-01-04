@@ -16,8 +16,7 @@ public class AddMeetingViewModel extends ViewModel {
     private final MeetingRepository meetingRepository ;
     private final MutableLiveData<Boolean> isSaveButtonEnabledMutableLiveData = new MutableLiveData<>(true);
     private final SingleLiveEvent<Void> closeActivitySingleLiveEvent = new SingleLiveEvent<>();
-
-
+    private Room selectedRoom;
 
 
     public AddMeetingViewModel(@NonNull MeetingRepository meetingRepository) {
@@ -45,6 +44,10 @@ public class AddMeetingViewModel extends ViewModel {
 
         meetingRepository.addMeeting(topic, time, room, participantMail);
         closeActivitySingleLiveEvent.call();
+    }
+
+    public void onRoomSelected (Room selectedItem){
+        selectedRoom = selectedItem;
     }
 
 }

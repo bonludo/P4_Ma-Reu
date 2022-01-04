@@ -1,5 +1,6 @@
 package com.bonboncompany.p4.data;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.bonboncompany.p4.BuildConfig;
@@ -28,7 +29,7 @@ public class MeetingRepository {
         }
     }
 
-    public MutableLiveData<List<Meeting>> getMeetingsLiveData() {
+    public LiveData<List<Meeting>> getMeetingsLiveData() {
         return meetingsLiveData;
     }
 
