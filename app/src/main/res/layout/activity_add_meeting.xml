@@ -27,7 +27,7 @@
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/addtimeLyt"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
@@ -49,11 +49,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:timePickerMode="spinner" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/addroomLyt"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/socialLyt"
@@ -66,16 +65,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:layout_marginLeft="8dp"
             android:hint="Salle : " />
+
         <Spinner
             android:id="@+id/spinnerRoom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/addRoomSelection"
+            tools:layout_editor_absoluteX="-1dp" />
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/socialLyt"
@@ -108,5 +110,6 @@
         app:layout_constraintEnd_toEndOf="@+id/socialLyt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/socialLyt" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

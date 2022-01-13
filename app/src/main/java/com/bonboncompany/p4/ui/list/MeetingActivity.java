@@ -11,10 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -23,16 +20,22 @@ import com.bonboncompany.p4.data.model.Room;
 import com.bonboncompany.p4.ui.ViewModelFactory;
 import com.bonboncompany.p4.ui.add.AddMeetingActivity;
 import com.bonboncompany.p4.ui.detail.DetailMeetingActivity;
+import com.bonboncompany.p4.ui.list.dialogfilter.CustomTimePickerDialog;
 import com.bonboncompany.p4.ui.list.dialogfilter.RoomSpinnerDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.time.LocalTime;
+import java.util.Calendar;
 
 public class MeetingActivity extends AppCompatActivity implements OnMeetingClickedListener {
 
     private MeetingViewModel viewModel;
 
     private RoomSpinnerDialog.RoomSpinnerListener listener;
+
+    Calendar mcurrentTime = Calendar.getInstance();
+    int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+    int minute = mcurrentTime.get(Calendar.MINUTE);
+    CustomTimePickerDialog mTimePicker;
 
 
     @Override
@@ -49,8 +52,9 @@ public class MeetingActivity extends AppCompatActivity implements OnMeetingClick
 
         viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(
                 MeetingViewModel.class);
-        viewModel.getMeetingListLiveData().observe(this, meetingViewStateItems -> adapter.submitList(
-                meetingViewStateItems));
+        viewModel.getMeetingListLiveData().observe(this,
+                meetingViewStateItems -> adapter.submitList(
+                        meetingViewStateItems));
     }
 
     @Override
@@ -63,13 +67,14 @@ public class MeetingActivity extends AppCompatActivity implements OnMeetingClick
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.filter_hour:
 
+            case R.id.filter_hour:
+                buttonOpenDialogTimeClicked();
                 Toast.makeText(this, "Time Filter", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.filter_room:
-               buttonOpenDialogClicked();
+                buttonOpenDialogClicked();
                 viewModel.onRoomChanged(Room.ZELDA);
                 return true;
 
@@ -77,22 +82,35 @@ public class MeetingActivity extends AppCompatActivity implements OnMeetingClick
                 viewModel.onRoomChanged(null);
                 Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     private void buttonOpenDialogClicked() {
-        RoomSpinnerDialog.RoomSpinnerListener listener = new RoomSpinnerDialog.RoomSpinnerListener(){
+        RoomSpinnerDialog.RoomSpinnerListener listener = new RoomSpinnerDialog.RoomSpinnerListener() {
             @Override
             public void roomSpinner(Spinner room) {
-                Toast.makeText(MeetingActivity.this,room.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(MeetingActivity.this, room.toString(), Toast.LENGTH_LONG).show();
+
             }
         };
         final RoomSpinnerDialog dialog = new RoomSpinnerDialog(this, listener);
-
         dialog.show();
+    }
 
+    private void buttonOpenDialogTimeClicked() {
+        mTimePicker = new CustomTimePickerDialog(MeetingActivity.this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minuteOfDay) {
+                String selectedHour = Integer.toString(hour);
+                String selectedMinute = Integer.toString(minute);
+                String time = (selectedHour + ":" + selectedMinute);
+            }
+        }, hour, minute, true);
+        mTimePicker.setTitle("Selectionne l'heure");
+        mTimePicker.show();
     }
 
     @Override

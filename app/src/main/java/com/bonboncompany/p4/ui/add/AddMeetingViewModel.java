@@ -14,7 +14,7 @@ import java.time.LocalTime;
 public class AddMeetingViewModel extends ViewModel {
 
     private final MeetingRepository meetingRepository ;
-    private final MutableLiveData<Boolean> isSaveButtonEnabledMutableLiveData = new MutableLiveData<>(true);
+    private final MutableLiveData<Boolean> isSaveButtonEnabledMutableLiveData = new MutableLiveData<>(false);
     private final SingleLiveEvent<Void> closeActivitySingleLiveEvent = new SingleLiveEvent<>();
     private Room selectedRoom;
 
@@ -28,6 +28,11 @@ public class AddMeetingViewModel extends ViewModel {
         return isSaveButtonEnabledMutableLiveData;
     }
 
+    public void onTopicChanged(String topic) {
+        isSaveButtonEnabledMutableLiveData.setValue(!topic.isEmpty());
+    }
+
+
     // single event close activity
     public SingleLiveEvent<Void> getCloseActivitySingleLiveEvent() {
         return closeActivitySingleLiveEvent;
@@ -36,8 +41,7 @@ public class AddMeetingViewModel extends ViewModel {
     //method creation
     public void onAddButtonClicked(
             @NonNull String topic,
-            @Nullable LocalTime time ,
-
+            @Nullable LocalTime time,
             @Nullable Room room,
             @NonNull String participantMail
     ) {
