@@ -30,6 +30,7 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     private LocalTime time;
     private Room room;
+    TimePicker timePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,9 @@ public class AddMeetingActivity extends AppCompatActivity {
         Spinner roomSpinner = findViewById(R.id.spinnerRoom);
         TextInputEditText participantEditText = findViewById(R.id.addparticipantmail);
         Button addMeetingButton = findViewById(R.id.addButton);
+        timePicker= (TimePicker) findViewById(R.id.addtimePicker);
+        timePicker.setIs24HourView(true); // Mode 24H
 
-        TimePicker timePicker = findViewById(R.id.addtimePicker);
         roomSpinner.setAdapter(new ArrayAdapter<Room>(this,
                 android.R.layout.simple_spinner_item,
                 Room.values()));
@@ -66,8 +68,6 @@ public class AddMeetingActivity extends AppCompatActivity {
            }
        });
 
-        timePicker.setIs24HourView(true); // Mode 24H
-        time = LocalTime.of(timePicker.getCurrentHour(), timePicker.getCurrentMinute());
 
         bindAddButton(viewModel,topicEditText,participantEditText, addMeetingButton);
 
@@ -100,6 +100,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         addMeetingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                time = LocalTime.of(timePicker.getCurrentHour(), timePicker.getCurrentMinute());
                 viewModel.onAddButtonClicked(
                         topicEditText.getText().toString(),
                         time,

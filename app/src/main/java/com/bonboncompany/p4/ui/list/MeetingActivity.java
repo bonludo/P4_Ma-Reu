@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,11 +31,11 @@ public class MeetingActivity extends AppCompatActivity implements OnMeetingClick
 
     private MeetingViewModel viewModel;
 
-    private RoomSpinnerDialog.RoomSpinnerListener listener;
 
     Calendar mcurrentTime = Calendar.getInstance();
     int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
     int minute = mcurrentTime.get(Calendar.MINUTE);
+    private Room room;
     CustomTimePickerDialog mTimePicker;
 
 
@@ -70,11 +71,13 @@ public class MeetingActivity extends AppCompatActivity implements OnMeetingClick
 
             case R.id.filter_hour:
                 buttonOpenDialogTimeClicked();
+
                 Toast.makeText(this, "Time Filter", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.filter_room:
-                buttonOpenDialogClicked();
+                buttonOpenDialogRoomClicked();
+
                 viewModel.onRoomChanged(Room.ZELDA);
                 return true;
 
@@ -88,15 +91,8 @@ public class MeetingActivity extends AppCompatActivity implements OnMeetingClick
         }
     }
 
-    private void buttonOpenDialogClicked() {
-        RoomSpinnerDialog.RoomSpinnerListener listener = new RoomSpinnerDialog.RoomSpinnerListener() {
-            @Override
-            public void roomSpinner(Spinner room) {
-                Toast.makeText(MeetingActivity.this, room.toString(), Toast.LENGTH_LONG).show();
-
-            }
-        };
-        final RoomSpinnerDialog dialog = new RoomSpinnerDialog(this, listener);
+    private void buttonOpenDialogRoomClicked() {
+        final RoomSpinnerDialog dialog = new RoomSpinnerDialog(this);
         dialog.show();
     }
 
@@ -122,5 +118,4 @@ public class MeetingActivity extends AppCompatActivity implements OnMeetingClick
     public void onDeleteMeetingClicked(long meetingId) {
         viewModel.onDeleteMeetingClicked(meetingId);
     }
-
 }

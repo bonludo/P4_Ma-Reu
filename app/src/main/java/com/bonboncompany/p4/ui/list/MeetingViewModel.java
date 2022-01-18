@@ -1,6 +1,7 @@
 package com.bonboncompany.p4.ui.list;
 
 import android.app.TimePickerDialog;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModel;
 import com.bonboncompany.p4.data.MeetingRepository;
 import com.bonboncompany.p4.data.model.Meeting;
 import com.bonboncompany.p4.data.model.Room;
+import com.bonboncompany.p4.ui.list.dialogfilter.RoomSpinnerDialog;
 import com.bonboncompany.p4.util.SingleLiveEvent;
 
 import java.time.LocalTime;
@@ -31,6 +33,7 @@ public class MeetingViewModel extends ViewModel {
     private final MutableLiveData<LocalTime> chosenTimeSlot = new MutableLiveData<>();
 
     private final MeetingRepository meetingRepository;
+
 
 
     public MeetingViewModel(MeetingRepository meetingRepository) {
@@ -120,9 +123,9 @@ public class MeetingViewModel extends ViewModel {
         currentlySelectedRoom.setValue(room);
     }
 
-//    public void onHourChanged(LocalTime time) {
-//        chosenTimeSlot.setValue(time);
-//    }
+    public void onHourChanged(LocalTime time) {
+        chosenTimeSlot.setValue(time);
+    }
 
     public void onDeleteMeetingClicked(long meetingId) { meetingRepository.deleteMeeting(meetingId); }
 

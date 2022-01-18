@@ -17,9 +17,7 @@ import com.bonboncompany.p4.data.model.Room;
 
 public class RoomSpinnerDialog extends Dialog {
 
-    public interface RoomSpinnerListener {
-        public void roomSpinner(Spinner room);
-    }
+
 
     public Context context;
 
@@ -27,12 +25,13 @@ public class RoomSpinnerDialog extends Dialog {
     private Button buttonOK;
     private Button buttonCancel;
 
-    private RoomSpinnerListener listener;
+    private Room room;
 
-    public RoomSpinnerDialog(@NonNull Context context, RoomSpinnerListener listener) {
+
+
+    public RoomSpinnerDialog(@NonNull Context context) {
         super(context);
         this.context = context;
-        this.listener = listener;
     }
 
     @Override
@@ -53,13 +52,14 @@ public class RoomSpinnerDialog extends Dialog {
         buttonOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonOKClicked();
+                selectedRoomButtonOKClicked();
             }
         });
 
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 buttonCancelClick();
             }
         });
@@ -67,20 +67,17 @@ public class RoomSpinnerDialog extends Dialog {
 
     }
 
-    private void buttonOKClicked() {
+    private Room selectedRoomButtonOKClicked() {
 
-        Spinner room = this.roomSpinnerFilter;
+        room = (Room) roomSpinnerFilter.getSelectedItem();
 
         if (room == null) {
             Toast.makeText(this.context, "select a room", Toast.LENGTH_LONG).show();
-            return;
+            return null;
         }
         this.dismiss();
 
-        if (this.listener != null) {
-            this.listener.roomSpinner(room);
-        }
-
+        return room;
     }
 
     private void buttonCancelClick() {
