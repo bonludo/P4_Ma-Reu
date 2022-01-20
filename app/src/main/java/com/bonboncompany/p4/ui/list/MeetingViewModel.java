@@ -1,23 +1,15 @@
 package com.bonboncompany.p4.ui.list;
 
-import android.app.TimePickerDialog;
-import android.widget.Spinner;
-import android.widget.TimePicker;
-
 import androidx.annotation.Nullable;
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.bonboncompany.p4.data.MeetingRepository;
 import com.bonboncompany.p4.data.model.Meeting;
 import com.bonboncompany.p4.data.model.Room;
-import com.bonboncompany.p4.ui.list.dialogfilter.RoomSpinnerDialog;
-import com.bonboncompany.p4.util.SingleLiveEvent;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
