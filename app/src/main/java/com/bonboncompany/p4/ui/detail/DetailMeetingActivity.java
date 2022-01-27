@@ -44,6 +44,7 @@ public class DetailMeetingActivity extends AppCompatActivity {
             timeTextView.setText("Commence à : " + detailMeetingViewState.getTime());
             roomTextView.setText("Salle : " + detailMeetingViewState.getRoom());
             mailParticipantTextView.setText(detailMeetingViewState.getParticipantMail());
+            roomImageView.setImageResource(detailMeetingViewState.getIcon());
         });
     }
 }

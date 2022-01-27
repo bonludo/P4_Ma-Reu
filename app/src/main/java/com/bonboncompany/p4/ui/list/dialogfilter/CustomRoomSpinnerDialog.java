@@ -1,6 +1,5 @@
 package com.bonboncompany.p4.ui.list.dialogfilter;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -20,15 +19,23 @@ public class CustomRoomSpinnerDialog extends Dialog {
 
 
     public Context context;
-    public Spinner roomSpinnerFilter;
+    private Spinner roomSpinnerFilter;
     private Button buttonOK;
     private Button buttonCancel;
-    public Room roomSelected;
+    private Room roomSelected;
+    private MyRoomDialogListener listener;
 
 
-    public CustomRoomSpinnerDialog(@NonNull Context context) {
+
+    public interface MyRoomDialogListener
+    {
+        public void userSelectedAValue(Room value);
+    }
+
+    public CustomRoomSpinnerDialog(@NonNull Context context, MyRoomDialogListener listener) {
         super(context);
         this.context = context;
+        this.listener = listener;
     }
 
     @Override
@@ -46,39 +53,37 @@ public class CustomRoomSpinnerDialog extends Dialog {
         buttonCancel = (Button) findViewById(R.id.button_cancel);
 
 
-//        buttonOK.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                selectedRoomButtonOKClicked();
-//            }
-//        });
-//
-//
-//        buttonCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                buttonCancelClick();
-//            }
-//        });
-//    }
-//
-//    public Room selectedRoomButtonOKClicked() {
-//
-//        roomSelected = (Room) roomSpinnerFilter.getSelectedItem();
-//
-//        if (roomSelected == null) {
-//            Toast.makeText(this.context, "select a room", Toast.LENGTH_LONG).show();
-//        }
-//        this.dismiss(); // Close dialog
-//
-//
-//        return roomSelected;
-//
-//    }
+        buttonOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedRoomButtonOKClicked();
+            }
+        });
 
-//    private void buttonCancelClick() {
-//        this.dismiss(); // Close dialog
+
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                buttonCancelClick();
+            }
+        });
+    }
+
+    private void selectedRoomButtonOKClicked() {
+
+        roomSelected = (Room) roomSpinnerFilter.getSelectedItem();
+
+        if (roomSelected == null) {
+            Toast.makeText(this.context, "select a room", Toast.LENGTH_LONG).show();
+        }
+        this.dismiss(); // Close dialog
+
+        this.listener.userSelectedAValue(roomSelected);
+    }
+
+    private void buttonCancelClick() {
+        this.dismiss(); // Close dialog
     }
 }
 

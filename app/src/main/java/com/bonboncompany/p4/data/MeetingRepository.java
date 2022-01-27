@@ -20,11 +20,11 @@ public class MeetingRepository {
 
     public MeetingRepository() {
         if (BuildConfig.DEBUG) {
-            addMeeting("dérapage", LocalTime.of(13, 10), Room.LUIGI, "lucas@yahoo.fr");
+            addMeeting("dérapage", LocalTime.of(18, 10), Room.LUIGI, "lucas@yahoo.fr");
             addMeeting("Vitesse", LocalTime.of(10, 45), Room.BOWSER, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
             addMeeting("Piège", LocalTime.of(12, 50), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
             addMeeting("banane", LocalTime.of(18, 30), Room.MARIO, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
-            addMeeting("Bombe", LocalTime.of(15, 20), Room.LUIGI, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+            addMeeting("Bombe", LocalTime.of(18, 20), Room.LUIGI, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
             addMeeting("Circuit", LocalTime.of(8, 0), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
         }
     }
@@ -67,21 +67,6 @@ public class MeetingRepository {
             }
             return foundMeeting;
         }
-
-    public void getSameMeetingRoomFilter (Room metingRoom) {
-
-        List<Meeting> meetings = meetingsLiveData.getValue();
-
-        List<Meeting> sameRoomMeeting = new ArrayList<>();
-        Meeting foundMeeting = null;
-        for (Meeting meeting : meetings) {
-            if (metingRoom == meeting.getRoom()) {
-              sameRoomMeeting.add(meeting);
-            }
-        }
-        meetingsLiveData.setValue(sameRoomMeeting);
-    }
-
 
 
     public void deleteMeeting(long meetingId) {

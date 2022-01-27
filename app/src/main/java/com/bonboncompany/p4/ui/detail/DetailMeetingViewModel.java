@@ -28,7 +28,7 @@ public class DetailMeetingViewModel extends ViewModel {
                 meeting.getMeetingTopic(),
                 meeting.getTime().toString(),
                 capitalize(meeting.getRoom().toString()),
-                meeting.getParticipantMail());
+                meeting.getParticipantMail(),meeting.getRoom().getIcon());
     }
 
     private String capitalize(String name) {

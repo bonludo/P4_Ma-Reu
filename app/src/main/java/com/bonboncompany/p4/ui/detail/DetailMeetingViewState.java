@@ -11,12 +11,18 @@ public class DetailMeetingViewState {
     private final String time;
     private final String room;
     private final String participantMail;
+    private final int icon;
 
-    public DetailMeetingViewState(String meetingTopic, String time, String room, String participantMail) {
+    public int getIcon() {
+        return icon;
+    }
+
+    public DetailMeetingViewState(String meetingTopic, String time, String room, String participantMail, int icon) {
         this.meetingTopic = meetingTopic;
         this.time = time;
         this.room = room;
         this.participantMail = participantMail;
+        this.icon = icon;
     }
 
     @Override
@@ -24,21 +30,22 @@ public class DetailMeetingViewState {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DetailMeetingViewState that = (DetailMeetingViewState) o;
-        return time == that.time && Objects.equals(meetingTopic, that.meetingTopic) && room == that.room && Objects.equals(participantMail, that.participantMail);
+        return icon == that.icon && Objects.equals(meetingTopic, that.meetingTopic) && Objects.equals(time, that.time) && Objects.equals(room, that.room) && Objects.equals(participantMail, that.participantMail);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(meetingTopic, time, room, participantMail);
+        return Objects.hash(meetingTopic, time, room, participantMail,icon);
     }
 
     @Override
     public String toString() {
-        return "MeetingDetailViewState{" +
+        return "DetailMeetingViewState{" +
                 "meetingTopic='" + meetingTopic + '\'' +
-                ", time=" + time +
-                ", room=" + room +
+                ", time='" + time + '\'' +
+                ", room='" + room + '\'' +
                 ", participantMail='" + participantMail + '\'' +
+                ", icon=" + icon +
                 '}';
     }
 

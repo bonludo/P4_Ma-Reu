@@ -1,73 +1,84 @@
 package com.bonboncompany.p4.ui.list.dialogfilter;
 
-import android.app.TimePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.widget.NumberPicker;
+import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+import androidx.annotation.NonNull;
 
-public class CustomTimePickerDialog extends TimePickerDialog {
+import com.bonboncompany.p4.R;
 
-    private final static int TIME_PICKER_INTERVAL = 60;
-    private TimePicker mTimePicker;
-    private final OnTimeSetListener mTimeSetListener;
+import java.time.LocalTime;
 
-    public CustomTimePickerDialog(Context context,
-                                  OnTimeSetListener listener,
-                                  int hourOfDay,
-                                  int minute,
-                                  boolean is24HourView) {
-        super(context, TimePickerDialog.THEME_HOLO_LIGHT, null, hourOfDay,
-                minute / TIME_PICKER_INTERVAL, is24HourView);
-        mTimeSetListener = listener;
+public class CustomTimePickerDialog extends Dialog {
+
+
+    public Context context;
+    private TimePicker timeSpinnerFilter;
+    private Button buttonOK;
+    private Button buttonCancel;
+    private LocalTime timeSelected;
+    private CustomTimePickerDialog.MyTimeDialogListener listener;
+
+    public interface MyTimeDialogListener
+    {
+        public void userSelectedAValue(LocalTime value);
+    }
+
+    public CustomTimePickerDialog(@NonNull Context context, MyTimeDialogListener listener) {
+        super(context);
+        this.context = context;
+        this.listener = listener;
     }
 
     @Override
-    public void updateTime(int hourOfDay, int minuteOfHour) {
-        mTimePicker.setCurrentHour(hourOfDay);
-        mTimePicker.setCurrentMinute(minuteOfHour / TIME_PICKER_INTERVAL);
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.hour_custom_dialog);
 
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        switch (which) {
-            case BUTTON_POSITIVE:
-                if (mTimeSetListener != null) {
-                    mTimeSetListener.onTimeSet(mTimePicker, mTimePicker.getCurrentHour(),
-                            mTimePicker.getCurrentMinute() * TIME_PICKER_INTERVAL);
-                }
-                break;
-            case BUTTON_NEGATIVE:
-                cancel();
-                break;
-        }
-    }
+        timeSpinnerFilter = findViewById(R.id.timePickerFilter);
+        timeSpinnerFilter.setIs24HourView(true); // Mode 24H
 
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        try {
-            Class<?> classForid = Class.forName("com.android.internal.R$id");
-            Field timePickerField = classForid.getField("timePicker");
-            mTimePicker = (TimePicker) findViewById(timePickerField.getInt(null));
-            Field field = classForid.getField("minute");
+        buttonOK = (Button) findViewById(R.id.button_ok);
+        buttonCancel = (Button) findViewById(R.id.button_cancel);
 
-            NumberPicker minuteSpinner = (NumberPicker) mTimePicker
-                    .findViewById(field.getInt(null));
-            minuteSpinner.setMinValue(0);
-            minuteSpinner.setMaxValue((60 / TIME_PICKER_INTERVAL) - 1);
-            List<String> displayedValues = new ArrayList<>();
-            for (int i = 0; i < 60; i += TIME_PICKER_INTERVAL) {
-                displayedValues.add(String.format("%02d", i));
+
+        buttonOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedTimeButtonOKClicked();
             }
-            minuteSpinner.setDisplayedValues(displayedValues
-                    .toArray(new String[displayedValues.size()]));
-        } catch (Exception e) {
-            e.printStackTrace();
+        });
+
+
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                buttonCancelClick();
+            }
+        });
+    }
+
+    public void selectedTimeButtonOKClicked() {
+
+        timeSelected = LocalTime.of(timeSpinnerFilter.getCurrentHour(), timeSpinnerFilter.getCurrentMinute());
+
+        if (timeSelected == null) {
+            Toast.makeText(this.context, "select a time", Toast.LENGTH_LONG).show();
         }
+        this.dismiss(); // Close dialog
+
+        this.listener.userSelectedAValue(timeSelected);
+    }
+
+    private void buttonCancelClick() {
+        this.dismiss(); // Close dialog
     }
 }

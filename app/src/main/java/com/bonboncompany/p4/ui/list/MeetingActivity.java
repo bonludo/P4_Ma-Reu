@@ -1,23 +1,15 @@
 package com.bonboncompany.p4.ui.list;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bonboncompany.p4.R;
@@ -25,22 +17,16 @@ import com.bonboncompany.p4.data.model.Room;
 import com.bonboncompany.p4.ui.ViewModelFactory;
 import com.bonboncompany.p4.ui.add.AddMeetingActivity;
 import com.bonboncompany.p4.ui.detail.DetailMeetingActivity;
-import com.bonboncompany.p4.ui.list.dialogfilter.CustomTimePickerDialog;
 import com.bonboncompany.p4.ui.list.dialogfilter.CustomRoomSpinnerDialog;
+import com.bonboncompany.p4.ui.list.dialogfilter.CustomTimePickerDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Calendar;
+import java.time.LocalTime;
 
 public class MeetingActivity extends AppCompatActivity implements OnMeetingClickedListener {
 
     private MeetingViewModel viewModel;
 
-
-    Calendar mcurrentTime = Calendar.getInstance();
-    int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-    int minute = mcurrentTime.get(Calendar.MINUTE);
-    private Room room;
-    CustomTimePickerDialog mTimePicker;
 
 
     @Override
@@ -64,32 +50,30 @@ public class MeetingActivity extends AppCompatActivity implements OnMeetingClick
                         meetingViewStateItems));
     }
 
-    public void buttonOpenDialogRoomClicked() {
-        AlertDialog.Builder dialogRoom = new AlertDialog.Builder(this)
-                .setTitle("Choisis une salle");
+    public void buttonRoomOpenDialogClicked() {
 
-        final View CustomRoomSpinnerDialogView = getLayoutInflater().inflate(
-                R.layout.room_spinner_custom_dialog,null
-        );
-        dialogRoom.setView(CustomRoomSpinnerDialogView);
+        CustomRoomSpinnerDialog.MyRoomDialogListener listener = new CustomRoomSpinnerDialog.MyRoomDialogListener() {
+            @Override
+            public void userSelectedAValue(Room value) {
+                Toast.makeText(MeetingActivity.this, "Salle : " + value, Toast.LENGTH_LONG).show();
+                viewModel.onRoomChanged(value);
+            }
 
+        };
+        CustomRoomSpinnerDialog dialog = new CustomRoomSpinnerDialog(this,listener);
+        dialog.show();
+    }
 
-                dialogRoom.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+    public void buttonTimeOpenDialogClicked() {
+        CustomTimePickerDialog.MyTimeDialogListener listener = new CustomTimePickerDialog.MyTimeDialogListener() {
+            @Override
+            public void userSelectedAValue(LocalTime value) {
+                Toast.makeText(MeetingActivity.this, "heure : " + value, Toast.LENGTH_LONG).show();
+                viewModel.onHourChanged(value);
+            }
 
-                        Spinner roomSpinnerFilter = (Spinner) findViewById(R.id.spinner_room_filter);
-                        roomSpinnerFilter.setAdapter(new ArrayAdapter<Room>(,
-                                android.R.layout.simple_spinner_item,
-                                Room.values()));
-
-                        if (roomSpinnerFilter == null) {
-                            Toast.makeText(MeetingActivity.this, "select a room", Toast.LENGTH_LONG).show();
-                        }
-                        room = (Room) roomSpinnerFilter.getSelectedItem();
-                    }
-                });
-        AlertDialog dialog = dialogRoom.create();
+        };
+        CustomTimePickerDialog dialog = new CustomTimePickerDialog(this,listener);
         dialog.show();
     }
 
@@ -105,40 +89,25 @@ public class MeetingActivity extends AppCompatActivity implements OnMeetingClick
         switch (item.getItemId()) {
 
             case R.id.filter_hour:
-                buttonOpenDialogTimeClicked();
 
-                Toast.makeText(this, "Time Filter", Toast.LENGTH_SHORT).show();
+                buttonTimeOpenDialogClicked();
                 return true;
 
             case R.id.filter_room:
-                buttonOpenDialogRoomClicked();
 
-                viewModel.onRoomChanged(room);
-                //Test du filtre avec la room zelda
+                buttonRoomOpenDialogClicked();
                 return true;
 
             case R.id.refresh_all:
+
                 viewModel.onRoomChanged(null);
+                viewModel.onHourChanged(null);
                 Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-
-    private void buttonOpenDialogTimeClicked() {
-        mTimePicker = new CustomTimePickerDialog(MeetingActivity.this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minuteOfDay) {
-                String selectedHour = Integer.toString(hour);
-                String selectedMinute = Integer.toString(minute);
-                String time = (selectedHour + ":" + selectedMinute);
-            }
-        }, hour, minute, true);
-        mTimePicker.setTitle("Selectionne l'heure");
-        mTimePicker.show();
     }
 
     @Override
@@ -150,4 +119,5 @@ public class MeetingActivity extends AppCompatActivity implements OnMeetingClick
     public void onDeleteMeetingClicked(long meetingId) {
         viewModel.onDeleteMeetingClicked(meetingId);
     }
+
 }

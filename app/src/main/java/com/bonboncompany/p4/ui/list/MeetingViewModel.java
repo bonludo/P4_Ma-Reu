@@ -33,33 +33,29 @@ public class MeetingViewModel extends ViewModel {
 
         LiveData<List<Meeting>> meetingListLiveData = meetingRepository.getMeetingsLiveData();
 
-        meetingListMediatorLiveData.addSource(meetingListLiveData, new Observer<List<Meeting>>() {
-            @Override
-            public void onChanged(List<Meeting> meetings) {
-                combine(meetings, currentlySelectedRoom.getValue());
-            }
-        });
 
-        meetingListMediatorLiveData.addSource(currentlySelectedRoom, new Observer<Room>() {
-            @Override
-            public void onChanged(Room room) {
-                combine(meetingListLiveData.getValue(), room);
-            }
-        });
+            meetingListMediatorLiveData.addSource(meetingListLiveData, new Observer<List<Meeting>>() {
+                @Override
+                public void onChanged(List<Meeting> meetings) {
+                    combine(meetings, currentlySelectedRoom.getValue());
+                    combine2(meetings, chosenTimeSlot.getValue());
+                }
+            });
 
-//        meetingListMediatorLiveData.addSource(meetingListLiveData, new Observer<List<Meeting>>() {
-//            @Override
-//            public void onChanged(List<Meeting> meetings) {
-//                combine2(meetings, chosenTimeSlot.getValue());
-//            }
-//        });
-//
-//        meetingListMediatorLiveData.addSource(chosenTimeSlot, new Observer<LocalTime>() {
-//            @Override
-//            public void onChanged(LocalTime time) {
-//                combine2(meetingListLiveData.getValue(), time);
-//            }
-//        });
+            meetingListMediatorLiveData.addSource(currentlySelectedRoom, new Observer<Room>() {
+                @Override
+                public void onChanged(Room room) {
+                    combine(meetingListLiveData.getValue(), room);
+                }
+            });
+
+            meetingListMediatorLiveData.addSource(chosenTimeSlot, new Observer<LocalTime>() {
+                @Override
+                public void onChanged(LocalTime time) {
+                    combine2(meetingListLiveData.getValue(), time);
+                }
+            });
+
     }
 
     private void combine(@Nullable List<Meeting> meetings, @Nullable Room room) {
@@ -83,25 +79,25 @@ public class MeetingViewModel extends ViewModel {
         meetingListMediatorLiveData.setValue(meetingViewStateItems);
     }
 
-//    private void combine2(@Nullable List<Meeting> meetings, @Nullable LocalTime time) {
-//        if (meetings == null) {
-//            return;
-//        }
-//
-//        List<MeetingViewStateItem> meetingViewStateItems = new ArrayList<>();
-//        for (Meeting meeting : meetings) {
-//            if (time == null || time.getHour() == meeting.getTime().getHour()) {
-//                meetingViewStateItems.add(new MeetingViewStateItem(
-//                                meeting.getId(),
-//                                MeetingViewModel.this.getMeetingInfo(meeting),
-//                                meeting.getParticipantMail(),
-//                                meeting.getRoom().getColor()
-//                        )
-//                );
-//            }
-//        }
-//        meetingListMediatorLiveData.setValue(meetingViewStateItems);
-//    }
+    private void combine2(@Nullable List<Meeting> meetings, @Nullable LocalTime time) {
+        if (meetings == null) {
+            return;
+        }
+
+        List<MeetingViewStateItem> meetingViewStateItems = new ArrayList<>();
+        for (Meeting meeting : meetings) {
+            if (time == null || time.getHour() == meeting.getTime().getHour()) {
+                meetingViewStateItems.add(new MeetingViewStateItem(
+                                meeting.getId(),
+                                MeetingViewModel.this.getMeetingInfo(meeting),
+                                meeting.getParticipantMail(),
+                                meeting.getRoom().getColor()
+                        )
+                );
+            }
+        }
+        meetingListMediatorLiveData.setValue(meetingViewStateItems);
+    }
 
     public String getMeetingInfo(Meeting meeting) {
         String topic = meeting.getMeetingTopic();
