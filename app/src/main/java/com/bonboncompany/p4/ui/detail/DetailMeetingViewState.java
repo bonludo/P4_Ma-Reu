@@ -34,7 +34,7 @@ public class DetailMeetingViewState {
 
     @Override
     public int hashCode() {
-        return Objects.hash(meetingTopic, time, room, participantMail,icon);
+        return Objects.hash(meetingTopic, time, room, participantMail, icon);
     }
 
     @NonNull
@@ -53,9 +53,10 @@ public class DetailMeetingViewState {
         return meetingTopic;
     }
 
-    public String  getTime() {
+    public String getTime() {
         return time;
     }
+
     public String getRoom() {
         return room;
     }

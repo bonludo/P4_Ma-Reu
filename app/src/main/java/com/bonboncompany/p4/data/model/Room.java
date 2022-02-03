@@ -6,10 +6,10 @@ public enum Room {
 
     MARIO(R.color.redM, R.drawable.mario),
     LUIGI(R.color.greenLu, R.drawable.luigi),
-    PEACH(R.color.pinkT, R.drawable.peach),
+    PEACH(R.color.pinkZ, R.drawable.peach),
     DONKEY(R.color.beigeDo, R.drawable.donkeykong),
-    KIRBY(R.color.white, R.drawable.kirby),
-    ZELDA(R.color.pinkZ, R.drawable.zelda),
+    KIRBY(R.color.pinkZ, R.drawable.kirby),
+    ZELDA(R.color.pinkT, R.drawable.zelda),
     LINK(R.color.greenLi, R.drawable.link),
     BOWSER(R.color.yellowB, R.drawable.bowser),
     YOSHI(R.color.greenY,R.drawable.yoshi),

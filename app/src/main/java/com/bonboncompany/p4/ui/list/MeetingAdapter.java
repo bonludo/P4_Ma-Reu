@@ -64,7 +64,7 @@ public class MeetingAdapter extends ListAdapter<MeetingViewStateItem, MeetingAda
             mail_participantTextView.setText(item.getParticipants());
             room_avatarImageView.setImageTintList(
                     ColorStateList.valueOf(
-                    ContextCompat.getColor(itemView.getContext(), item.getImageColorRes())
+                            ContextCompat.getColor(itemView.getContext(), item.getImageColorRes())
                     )
             );
             deleteImageView.setOnClickListener(v -> listener.onDeleteMeetingClicked(item.getId()));

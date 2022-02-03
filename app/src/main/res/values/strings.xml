@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ma Réu</string>
+    <string name="app_name">Ma réu</string>
     <string name="delete_meeting">delete_meeting</string>
     <string name="mail_of_participant">mail_of_participant</string>
     <string name="topic_hour_room">topic_hour_room</string>

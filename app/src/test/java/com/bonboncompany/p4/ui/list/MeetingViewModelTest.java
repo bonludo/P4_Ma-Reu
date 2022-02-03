@@ -2,15 +2,17 @@ package com.bonboncompany.p4.ui.list;
 
 import static org.junit.Assert.*;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.bonboncompany.p4.data.MeetingRepository;
 import com.bonboncompany.p4.data.model.Meeting;
+import com.bonboncompany.p4.data.model.Room;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MeetingViewModelTest {
@@ -32,9 +34,8 @@ public class MeetingViewModelTest {
         meetingsMutableLiveData = new MutableLiveData<>();
         viewModel = new MeetingViewModel(meetingRepository);
 
-
+        meetingsMutableLiveData.setValue(nineMeeting());
         List<Meeting> meetings = meetingsMutableLiveData.getValue();
-                meetingsMutableLiveData.setValue(meetings);
 
     }
 
@@ -43,14 +44,12 @@ public class MeetingViewModelTest {
 
         // Given
         meetingsMutableLiveData.setValue(null);
-
+        nineMeeting();
         // When
-        MeetingViewStateItem result = viewModel.getMeetingListLiveData();
+        meetingsMutableLiveData.getValue();
 
         // Then
-        assertEquals(
-                testNeighbour,
-                service.getNeighbours().get(service.getNeighbours().size() - 1));
+        assertTrue(viewModel.getMeetingListLiveData().getValue().contains(1));
     }
 
     @Test
@@ -103,5 +102,18 @@ public class MeetingViewModelTest {
 
         // Then
         assertFalse(true);
+    }
+
+    private List<Meeting> nineMeeting() {
+        List<Meeting> meetings = new ArrayList<>();
+        meetings.add(new Meeting(1, "Réunion A", LocalTime.of(8, 00), Room.DIDDY, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com"),
+                new Meeting(+1, "Réunion B", LocalTime.of(11, 00), Room.KIRBY, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com"),
+                new Meeting(+1, "Réunion C", LocalTime.of(13, 00), Room.DONKEY, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com"),
+                new Meeting(+1, "dérapage", LocalTime.of(18, 00), Room.LUIGI, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com"),
+                new Meeting(+1, "Vitesse", LocalTime.of(10, 00), Room.BOWSER, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"),
+                new Meeting(+1, "Piège", LocalTime.of(12, 00), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"),
+                new Meeting(+1, "banane", LocalTime.of(18, 00), Room.MARIO, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"),
+                new Meeting(+1, "Bombe", LocalTime.of(18, 00), Room.LINK, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"),
+                new Meeting(+1, "Circuit", LocalTime.of(8, 00), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
     }
 }
