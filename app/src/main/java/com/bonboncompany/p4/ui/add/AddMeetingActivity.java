@@ -50,7 +50,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         timePicker.setIs24HourView(true); // Mode 24H
         timePicker.setMinute(0);
 
-        roomSpinner.setAdapter(new ArrayAdapter<Room>(this,
+        roomSpinner.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,
                 Room.values()));
 

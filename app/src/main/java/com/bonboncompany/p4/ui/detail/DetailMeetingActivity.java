@@ -1,17 +1,16 @@
 package com.bonboncompany.p4.ui.detail;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.bonboncompany.p4.R;
 import com.bonboncompany.p4.ui.ViewModelFactory;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DetailMeetingActivity extends AppCompatActivity {
 
@@ -41,7 +40,7 @@ public class DetailMeetingActivity extends AppCompatActivity {
 
         viewModel.meetingDetailViewStateLiveData().observe(this, detailMeetingViewState -> {
             topicMeetingTextView.setText("Sujet : " + detailMeetingViewState.getMeetingTopic());
-            timeTextView.setText("Commence à : " + detailMeetingViewState.getTime());
+            timeTextView.setText("Réunion à : " + detailMeetingViewState.getTime());
             roomTextView.setText("Salle : " + detailMeetingViewState.getRoom());
             mailParticipantTextView.setText(detailMeetingViewState.getParticipantMail());
             roomImageView.setImageResource(detailMeetingViewState.getIcon());

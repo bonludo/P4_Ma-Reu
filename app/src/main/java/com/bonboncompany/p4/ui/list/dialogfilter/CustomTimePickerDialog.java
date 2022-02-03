@@ -20,14 +20,10 @@ public class CustomTimePickerDialog extends Dialog {
 
     public Context context;
     private TimePicker timeSpinnerFilter;
-    private Button buttonOK;
-    private Button buttonCancel;
-    private LocalTime timeSelected;
-    private CustomTimePickerDialog.MyTimeDialogListener listener;
+    private final CustomTimePickerDialog.MyTimeDialogListener listener;
 
-    public interface MyTimeDialogListener
-    {
-        public void userSelectedAValue(LocalTime value);
+    public interface MyTimeDialogListener {
+        void userSelectedAValue(LocalTime value);
     }
 
     public CustomTimePickerDialog(@NonNull Context context, MyTimeDialogListener listener) {
@@ -45,8 +41,8 @@ public class CustomTimePickerDialog extends Dialog {
         timeSpinnerFilter = findViewById(R.id.timePickerFilter);
         timeSpinnerFilter.setIs24HourView(true); // Mode 24H
 
-        buttonOK = (Button) findViewById(R.id.button_ok);
-        buttonCancel = (Button) findViewById(R.id.button_cancel);
+        Button buttonOK = (Button) findViewById(R.id.button_ok);
+        Button buttonCancel = (Button) findViewById(R.id.button_cancel);
 
 
         buttonOK.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +64,7 @@ public class CustomTimePickerDialog extends Dialog {
 
     public void selectedTimeButtonOKClicked() {
 
-        timeSelected = LocalTime.of(timeSpinnerFilter.getCurrentHour(), timeSpinnerFilter.getCurrentMinute());
+        LocalTime timeSelected = LocalTime.of(timeSpinnerFilter.getCurrentHour(), timeSpinnerFilter.getCurrentMinute());
 
         if (timeSelected == null) {
             Toast.makeText(this.context, "select a time", Toast.LENGTH_LONG).show();

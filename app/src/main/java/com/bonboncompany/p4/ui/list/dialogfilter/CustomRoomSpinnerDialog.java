@@ -20,16 +20,11 @@ public class CustomRoomSpinnerDialog extends Dialog {
 
     public Context context;
     private Spinner roomSpinnerFilter;
-    private Button buttonOK;
-    private Button buttonCancel;
-    private Room roomSelected;
-    private MyRoomDialogListener listener;
+    private final MyRoomDialogListener listener;
 
 
-
-    public interface MyRoomDialogListener
-    {
-        public void userSelectedAValue(Room value);
+    public interface MyRoomDialogListener {
+        void userSelectedAValue(Room value);
     }
 
     public CustomRoomSpinnerDialog(@NonNull Context context, MyRoomDialogListener listener) {
@@ -45,13 +40,12 @@ public class CustomRoomSpinnerDialog extends Dialog {
         setContentView(R.layout.room_spinner_custom_dialog);
 
         roomSpinnerFilter = (Spinner) findViewById(R.id.spinner_room_filter);
-        roomSpinnerFilter.setAdapter(new ArrayAdapter<Room>(getContext(),
+        roomSpinnerFilter.setAdapter(new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item,
                 Room.values()));
 
-        buttonOK = (Button) findViewById(R.id.button_ok);
-        buttonCancel = (Button) findViewById(R.id.button_cancel);
-
+        Button buttonOK = (Button) findViewById(R.id.button_ok);
+        Button buttonCancel = (Button) findViewById(R.id.button_cancel);
 
         buttonOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +53,6 @@ public class CustomRoomSpinnerDialog extends Dialog {
                 selectedRoomButtonOKClicked();
             }
         });
-
 
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +65,7 @@ public class CustomRoomSpinnerDialog extends Dialog {
 
     private void selectedRoomButtonOKClicked() {
 
-        roomSelected = (Room) roomSpinnerFilter.getSelectedItem();
+        Room roomSelected = (Room) roomSpinnerFilter.getSelectedItem();
 
         if (roomSelected == null) {
             Toast.makeText(this.context, "select a room", Toast.LENGTH_LONG).show();

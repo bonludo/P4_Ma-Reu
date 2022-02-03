@@ -3,9 +3,6 @@ package com.bonboncompany.p4.ui.list;
 import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 
-import com.bonboncompany.p4.data.model.Room;
-
-import java.time.LocalTime;
 import java.util.Objects;
 
 public class MeetingViewStateItem {

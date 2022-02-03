@@ -1,5 +1,7 @@
 package com.bonboncompany.p4.data.model;
 
+import androidx.annotation.NonNull;
+
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -62,6 +64,7 @@ public class Meeting {
         return Objects.hash(id, meetingTopic, time, room, participantMail);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Meeting{" +

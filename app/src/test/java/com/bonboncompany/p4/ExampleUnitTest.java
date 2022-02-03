@@ -31,7 +31,7 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void filter_meetings_by_date() {
+    public void filter_meetings_by_room() {
         assertFalse(true);
     }
 
@@ -40,9 +40,4 @@ public class ExampleUnitTest {
         assertFalse(true);
     }
 
-    //Ajout d’une réunion.
-    //● Suppression d’une réunion.
-    //● Filtre des réunions par date ou par lieu.
-    //● Gestion de l’affichage responsive sur toutes les tailles de téléphone et de tablette
-    //Android, en modes portrait et paysage.
 }

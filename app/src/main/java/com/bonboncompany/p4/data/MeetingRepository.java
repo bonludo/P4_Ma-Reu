@@ -20,12 +20,12 @@ public class MeetingRepository {
 
     public MeetingRepository() {
         if (BuildConfig.DEBUG) {
-            addMeeting("dérapage", LocalTime.of(18, 10), Room.LUIGI, "lucas@yahoo.fr");
-            addMeeting("Vitesse", LocalTime.of(10, 45), Room.BOWSER, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
-            addMeeting("Piège", LocalTime.of(12, 50), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
-            addMeeting("banane", LocalTime.of(18, 30), Room.MARIO, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
-            addMeeting("Bombe", LocalTime.of(18, 20), Room.LUIGI, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
-            addMeeting("Circuit", LocalTime.of(8, 0), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+            addMeeting("dérapage", LocalTime.of(18, 00), Room.LUIGI, "lucas@yahoo.fr");
+            addMeeting("Vitesse", LocalTime.of(10, 00), Room.BOWSER, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+            addMeeting("Piège", LocalTime.of(12, 00), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+            addMeeting("banane", LocalTime.of(18, 00), Room.MARIO, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+            addMeeting("Bombe", LocalTime.of(18, 00), Room.LUIGI, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+            addMeeting("Circuit", LocalTime.of(8, 00), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
         }
     }
 

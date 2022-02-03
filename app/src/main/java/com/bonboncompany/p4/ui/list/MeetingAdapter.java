@@ -1,6 +1,5 @@
 package com.bonboncompany.p4.ui.list;
 
-import android.content.Context;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +15,6 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bonboncompany.p4.R;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 
 public class MeetingAdapter extends ListAdapter<MeetingViewStateItem, MeetingAdapter.ViewHolder> {
 

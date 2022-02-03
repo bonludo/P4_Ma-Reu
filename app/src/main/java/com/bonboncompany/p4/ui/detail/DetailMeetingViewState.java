@@ -1,8 +1,7 @@
 package com.bonboncompany.p4.ui.detail;
 
-import com.bonboncompany.p4.data.model.Room;
+import androidx.annotation.NonNull;
 
-import java.time.LocalTime;
 import java.util.Objects;
 
 public class DetailMeetingViewState {
@@ -38,6 +37,7 @@ public class DetailMeetingViewState {
         return Objects.hash(meetingTopic, time, room, participantMail,icon);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "DetailMeetingViewState{" +

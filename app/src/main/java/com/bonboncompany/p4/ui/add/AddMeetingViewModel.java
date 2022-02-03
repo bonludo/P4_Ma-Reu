@@ -1,20 +1,18 @@
 package com.bonboncompany.p4.ui.add;
 
+import android.content.Context;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.bonboncompany.p4.data.MeetingRepository;
-import com.bonboncompany.p4.data.model.Meeting;
 import com.bonboncompany.p4.data.model.Room;
 import com.bonboncompany.p4.util.SingleLiveEvent;
 
 import java.time.LocalTime;
-import java.util.List;
 
 public class AddMeetingViewModel extends ViewModel {
 
