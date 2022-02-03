@@ -20,15 +20,24 @@ public class MeetingRepository {
 
     public MeetingRepository() {
         if (BuildConfig.DEBUG) {
-            addMeeting("Réunion A", LocalTime.of(8, 00), Room.DIDDY, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com");
-            addMeeting("Réunion B", LocalTime.of(11, 00), Room.KIRBY, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com");
-            addMeeting("Réunion C", LocalTime.of(13, 00), Room.DONKEY, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com");
-            addMeeting("dérapage", LocalTime.of(18, 00), Room.LUIGI, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com");
-            addMeeting("Vitesse", LocalTime.of(10, 00), Room.BOWSER, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
-            addMeeting("Piège", LocalTime.of(12, 00), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
-            addMeeting("banane", LocalTime.of(18, 00), Room.MARIO, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
-            addMeeting("Bombe", LocalTime.of(18, 00), Room.LINK, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
-            addMeeting("Circuit", LocalTime.of(8, 00), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+            addMeeting("Réunion A", LocalTime.of(8, 00), Room.DIDDY,
+                    "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com");
+            addMeeting("Réunion B", LocalTime.of(11, 00), Room.KIRBY,
+                    "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com");
+            addMeeting("Réunion C", LocalTime.of(13, 00), Room.DONKEY,
+                    "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com");
+            addMeeting("dérapage", LocalTime.of(18, 00), Room.LUIGI,
+                    "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com");
+            addMeeting("Vitesse", LocalTime.of(10, 00), Room.BOWSER,
+                    "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+            addMeeting("Piège", LocalTime.of(12, 00), Room.ZELDA,
+                    "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+            addMeeting("banane", LocalTime.of(18, 00), Room.MARIO,
+                    "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+            addMeeting("Bombe", LocalTime.of(18, 00), Room.LINK,
+                    "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+            addMeeting("Circuit", LocalTime.of(8, 00), Room.ZELDA,
+                    "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
         }
     }
 
@@ -36,7 +45,7 @@ public class MeetingRepository {
         return meetingsLiveData;
     }
 
-    public void addMeeting(
+    public Meeting addMeeting(
             String meetingTopic,
             LocalTime time,
             Room room,
@@ -55,6 +64,7 @@ public class MeetingRepository {
         );
 
         meetingsLiveData.setValue(meetings);
+        return null;
     }
 
     public Meeting getMeetingById (long meetingId) {

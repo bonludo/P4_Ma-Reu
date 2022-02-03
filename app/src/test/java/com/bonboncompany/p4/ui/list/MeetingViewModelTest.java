@@ -32,9 +32,7 @@ public class MeetingViewModelTest {
     @Before
     public void setUp() {
         meetingsMutableLiveData = new MutableLiveData<>();
-        viewModel = new MeetingViewModel(meetingRepository);
 
-        meetingsMutableLiveData.setValue(nineMeeting());
         List<Meeting> meetings = meetingsMutableLiveData.getValue();
 
     }
@@ -43,8 +41,8 @@ public class MeetingViewModelTest {
     public void testGetMeetingListLiveData() {
 
         // Given
-        meetingsMutableLiveData.setValue(null);
-        nineMeeting();
+        meetingsMutableLiveData.setValue(nineMeeting());
+
         // When
         meetingsMutableLiveData.getValue();
 
@@ -56,10 +54,10 @@ public class MeetingViewModelTest {
     public void testOnDeleteMeetingClicked() {
 
         // Given
-
+        meetingsMutableLiveData.setValue(nineMeeting());
 
         // When
-
+        viewModel.onDeleteMeetingClicked(1);
 
         // Then
         assertFalse(true);
@@ -105,15 +103,16 @@ public class MeetingViewModelTest {
     }
 
     private List<Meeting> nineMeeting() {
-        List<Meeting> meetings = new ArrayList<>();
-        meetings.add(new Meeting(1, "Réunion A", LocalTime.of(8, 00), Room.DIDDY, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com"),
-                new Meeting(+1, "Réunion B", LocalTime.of(11, 00), Room.KIRBY, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com"),
-                new Meeting(+1, "Réunion C", LocalTime.of(13, 00), Room.DONKEY, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com"),
-                new Meeting(+1, "dérapage", LocalTime.of(18, 00), Room.LUIGI, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com"),
-                new Meeting(+1, "Vitesse", LocalTime.of(10, 00), Room.BOWSER, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"),
-                new Meeting(+1, "Piège", LocalTime.of(12, 00), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"),
-                new Meeting(+1, "banane", LocalTime.of(18, 00), Room.MARIO, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"),
-                new Meeting(+1, "Bombe", LocalTime.of(18, 00), Room.LINK, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"),
-                new Meeting(+1, "Circuit", LocalTime.of(8, 00), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+        List<Meeting> meetings = new ArrayList<Meeting>();
+        meetings.add(new Meeting(1,"Réunion A", LocalTime.of(8, 00), Room.DIDDY, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com"));
+        meetings.add(new Meeting(2,"Réunion B", LocalTime.of(11, 00), Room.KIRBY, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com"));
+        meetings.add(new Meeting(3,"Réunion C", LocalTime.of(13, 00), Room.DONKEY, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com"));
+        meetings.add(new Meeting(4,"dérapage", LocalTime.of(18, 00), Room.LUIGI, "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com"));
+        meetings.add(new Meeting(5,"Vitesse", LocalTime.of(10, 00), Room.BOWSER, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"));
+        meetings.add(new Meeting(6,"Piège", LocalTime.of(12, 00), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"));
+        meetings.add(new Meeting(7,"banane", LocalTime.of(18, 00), Room.MARIO, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"));
+        meetings.add(new Meeting(8,"Bombe", LocalTime.of(18, 00), Room.LINK, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"));
+        meetings.add(new Meeting(9,"Circuit", LocalTime.of(8, 00), Room.ZELDA, "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"));
+        return meetings;
     }
 }
