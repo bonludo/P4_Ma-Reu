@@ -1,78 +1,86 @@
 package com.bonboncompany.p4.data;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import com.bonboncompany.p4.data.model.Meeting;
 import com.bonboncompany.p4.data.model.Room;
 
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MeetingRepositoryTest {
 
-    MeetingRepository meetingRepository = new MeetingRepository();
-    LiveData<List<Meeting>> meeting = meetingRepository.getMeetingsLiveData();
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+    private MeetingRepository meetingRepository;
 
-    private MutableLiveData<List<Meeting>> meetingsLiveData = new MutableLiveData<>(new ArrayList<>());
+    @Before
+    public void setUp() throws Exception {
+        meetingRepository = new MeetingRepository();
+    }
+
+
+
 
 
     @Test
     public void testGetMeetingListLiveData() {
 
         // Given
-        meeting = newMeetings();
+        newMeetings();
 
         // When
-        meetingsLiveData.setValue(newMeetings().getValue());
-
+//        meetingsLiveData.setValue();
+//        meetingRepository.getMeetingsLiveData();
         // Then
-        assertFalse(meetingsLiveData.getValue().isEmpty());
+        assertFalse(meetingRepository.getMeetingsLiveData().getValue().isEmpty());
     }
 
     @Test
     public void testOnDeleteMeetingClicked() {
 
         // Given
-        meetingsLiveData.setValue(newMeetings().getValue());
-        Meeting meetingToDelete = meetingsLiveData.getValue().get(0);
+//        meetingsLiveData.setValue(newMeetings().getValue());
+        Meeting meetingToDelete = meetingRepository.getMeetingsLiveData().getValue().get(0);
 
         // When
         meetingRepository.deleteMeeting(meetingToDelete.getId());
 
         // Then
-        assertFalse(meetingsLiveData.getValue().contains(meetingToDelete));
+        assertFalse(meetingRepository.getMeetingsLiveData().getValue().contains(meetingToDelete));
 
     }
 
     @Test
     public void testAddMeeting() {
 
+        // Given
         Meeting meetingToAdd = meetingRepository.addMeeting("Réunion A",
                 LocalTime.of(8, 00),
                 Room.DIDDY,
                 "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com");
-        // Given
-
 
         // When
 
-
         // Then
-
+        assertTrue(meetingRepository.getMeetingsLiveData().getValue().contains(meetingToAdd));
     }
 
-    private LiveData<List<Meeting>> newMeetings() {
+    private void  newMeetings() {
         meetingRepository.addMeeting(
                 "Réunion A",
                 LocalTime.of(8, 00),
                 Room.DIDDY,
                 "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com");
-        return null;
+
     }
 }
+
+
+
