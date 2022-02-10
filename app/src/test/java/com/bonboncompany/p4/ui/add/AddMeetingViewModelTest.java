@@ -1,42 +1,66 @@
 package com.bonboncompany.p4.ui.add;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import androidx.lifecycle.MutableLiveData;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import com.bonboncompany.p4.data.MeetingRepository;
-import com.bonboncompany.p4.data.model.Meeting;
-import com.bonboncompany.p4.ui.list.MeetingViewModel;
+import com.bonboncompany.p4.data.model.Room;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.List;
+import java.time.LocalTime;
+
 
 public class AddMeetingViewModelTest {
 
-    private MeetingRepository meetingRepository;
-    private MeetingViewModel viewModel;
-    private MutableLiveData<List<Meeting>> meetingMutableLiveData;
 
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+
+
+    private MeetingRepository meetingRepository;
+    private AddMeetingViewModel viewModel;
 
     @Before
     public void setUp() {
 
-        meetingMutableLiveData = new MutableLiveData<>();
+        meetingRepository = new MeetingRepository();
+        viewModel = new AddMeetingViewModel(meetingRepository);
+
     }
 
     @Test
-    public void testAddMeetingInListLiveData() {
+    public void testAddMeetingWithAddButtonClicked() {
 
         // Given
-
+        meetingRepository.getMeetingsLiveData().getValue().clear();
+        String topicTest = "daphné";
 
         // When
-
+        viewModel.onAddButtonClicked(topicTest, LocalTime.of(10, 10),Room.KIRBY,
+                "marcopolo@google.com");
 
         // Then
-        assertFalse(true);
+        assertTrue(meetingRepository.getMeetingsLiveData().getValue().get(0).getMeetingTopic().contains(topicTest));
     }
+
+    @Test
+    public void testOnTopicChangedIsSaveButtonEnabled() {
+
+        // Given
+        meetingRepository.getMeetingsLiveData().getValue().clear();
+        String topicTest = "daphné";
+
+        // When
+       viewModel.onTopicChanged(topicTest);
+
+        // Then
+        assertEquals(viewModel.getIsSaveButtonEnabledLiveData().getValue(), true);
+    }
+
 }
 

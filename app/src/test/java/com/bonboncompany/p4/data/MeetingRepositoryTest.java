@@ -1,7 +1,9 @@
 package com.bonboncompany.p4.data;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
@@ -26,51 +28,59 @@ public class MeetingRepositoryTest {
     }
 
 
-
-
-
     @Test
     public void testGetMeetingListLiveData() {
 
         // Given
+        meetingRepository.getMeetingsLiveData().getValue().clear();
+
+
         newMeetings();
 
-        // When
-//        meetingsLiveData.setValue();
-//        meetingRepository.getMeetingsLiveData();
         // Then
         assertFalse(meetingRepository.getMeetingsLiveData().getValue().isEmpty());
     }
+
 
     @Test
     public void testOnDeleteMeetingClicked() {
 
         // Given
-//        meetingsLiveData.setValue(newMeetings().getValue());
+        meetingRepository.getMeetingsLiveData().getValue().clear();
+        newMeetings();
         Meeting meetingToDelete = meetingRepository.getMeetingsLiveData().getValue().get(0);
+
+
+
 
         // When
         meetingRepository.deleteMeeting(meetingToDelete.getId());
 
         // Then
         assertFalse(meetingRepository.getMeetingsLiveData().getValue().contains(meetingToDelete));
+        assertTrue(meetingRepository.getMeetingsLiveData().getValue().isEmpty());
 
     }
+
 
     @Test
     public void testAddMeeting() {
 
         // Given
-        Meeting meetingToAdd = meetingRepository.addMeeting("Réunion A",
-                LocalTime.of(8, 00),
-                Room.DIDDY,
-                "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com");
+        meetingRepository.getMeetingsLiveData().getValue().clear();
 
         // When
+        meetingRepository.addMeeting("Vitesse", LocalTime.of(10, 00), Room.BOWSER,
+                "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com," +
+                        " george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
+        newMeetings();
 
         // Then
-        assertTrue(meetingRepository.getMeetingsLiveData().getValue().contains(meetingToAdd));
+        assertFalse(meetingRepository.getMeetingsLiveData().getValue().isEmpty());
+        assertEquals(2,meetingRepository.getMeetingsLiveData().getValue().size());
     }
+
+
 
     private void  newMeetings() {
         meetingRepository.addMeeting(

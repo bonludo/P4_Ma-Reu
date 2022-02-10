@@ -2,13 +2,16 @@ package com.bonboncompany.p4.ui.list;
 
 import static org.junit.Assert.*;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 
 import com.bonboncompany.p4.data.MeetingRepository;
 import com.bonboncompany.p4.data.model.Meeting;
 import com.bonboncompany.p4.data.model.Room;
+import com.bonboncompany.p4.ui.detail.DetailMeetingViewModel;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import java.time.LocalTime;
@@ -24,16 +27,22 @@ public class MeetingViewModelTest {
     // display management for all phone and tablet sizes
     // in landscape or portrait mode
 
+
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+
     private MeetingRepository meetingRepository;
     private MeetingViewModel viewModel;
     private MutableLiveData<List<Meeting>> meetingsMutableLiveData;
 
-
     @Before
     public void setUp() {
+
+        meetingRepository = new MeetingRepository();
+        viewModel = new MeetingViewModel(meetingRepository);
         meetingsMutableLiveData = new MutableLiveData<>();
 
-        List<Meeting> meetings = meetingsMutableLiveData.getValue();
+        meetingsMutableLiveData.setValue(nineMeeting());
 
     }
 
@@ -41,20 +50,21 @@ public class MeetingViewModelTest {
     public void testGetMeetingListLiveData() {
 
         // Given
-        meetingsMutableLiveData.setValue(nineMeeting());
+        meetingRepository.getMeetingsLiveData().getValue().clear();
 
+        meetingRepository.getMeetingsLiveData().getValue().addAll(nineMeeting());
+        viewModel.getMeetingListLiveData().getValue().size();
         // When
-        meetingsMutableLiveData.getValue();
 
         // Then
-        assertTrue(viewModel.getMeetingListLiveData().getValue().contains(1));
+        assertEquals(meetingRepository.getMeetingsLiveData().getValue().size(),viewModel.getMeetingListLiveData().getValue().size());
     }
 
     @Test
     public void testOnDeleteMeetingClicked() {
 
         // Given
-        meetingsMutableLiveData.setValue(nineMeeting());
+//        meetingsMutableLiveData.setValue(nineMeeting());
 
         // When
         viewModel.onDeleteMeetingClicked(1);
