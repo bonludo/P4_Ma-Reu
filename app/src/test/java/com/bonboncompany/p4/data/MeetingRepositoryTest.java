@@ -15,6 +15,8 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MeetingRepositoryTest {
 
@@ -58,7 +60,7 @@ public class MeetingRepositoryTest {
 
         // Then
         assertFalse(meetingRepository.getMeetingsLiveData().getValue().contains(meetingToDelete));
-        assertTrue(meetingRepository.getMeetingsLiveData().getValue().isEmpty());
+        assertFalse(meetingRepository.getMeetingsLiveData().getValue().isEmpty());
 
     }
 
@@ -70,9 +72,6 @@ public class MeetingRepositoryTest {
         meetingRepository.getMeetingsLiveData().getValue().clear();
 
         // When
-        meetingRepository.addMeeting("Vitesse", LocalTime.of(10, 00), Room.BOWSER,
-                "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com," +
-                        " george@game.com, george@game.com, george@game.com, george@game.com, george@game.com");
         newMeetings();
 
         // Then
@@ -80,7 +79,44 @@ public class MeetingRepositoryTest {
         assertEquals(2,meetingRepository.getMeetingsLiveData().getValue().size());
     }
 
+    @Test
+    public void getMeetingByIdTest() {
 
+        // Given
+        meetingRepository.getMeetingsLiveData().getValue().clear();
+        meetingRepository.getMeetingsLiveData().getValue().addAll(sixMeeting());
+
+        long position = 4;
+
+
+        // Then
+        assertEquals(meetingRepository.getMeetingsLiveData().getValue().get(4).getId(), meetingRepository.getMeetingById(position).getId());
+
+    }
+
+    //Meeting for test
+    private List<Meeting> sixMeeting() {
+        List<Meeting> selected = new ArrayList<Meeting>();
+        String topicTest = "Dérapage";
+        selected.add(new Meeting(0, topicTest, LocalTime.of(18, 00), Room.LUIGI,
+                "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com"));
+        selected.add(new Meeting(1, "Vitesse", LocalTime.of(10, 00), Room.BOWSER,
+                "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, " +
+                        "george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"));
+        selected.add(new Meeting(2, "Piège", LocalTime.of(12, 00), Room.ZELDA,
+                "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com, " +
+                        "george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"));
+        selected.add(new Meeting(3, "banane", LocalTime.of(18, 00), Room.MARIO,
+                "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com," +
+                        " george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"));
+        selected.add(new Meeting(4, "Bombe", LocalTime.of(18, 00), Room.LINK,
+                "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com," +
+                        " george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"));
+        selected.add(new Meeting(5, "Circuit", LocalTime.of(8, 00), Room.ZELDA,
+                "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com," +
+                        " george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"));
+        return selected;
+    }
 
     private void  newMeetings() {
         meetingRepository.addMeeting(
@@ -88,6 +124,13 @@ public class MeetingRepositoryTest {
                 LocalTime.of(8, 00),
                 Room.DIDDY,
                 "lucas@yahoo.fr, henry@LIVE.fr, george@game.com, george@game.com");
+        meetingRepository.addMeeting(
+                "Vitesse",
+                LocalTime.of(10, 00),
+                Room.BOWSER,
+                "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com," +
+                        " george@game.com, george@game.com, george@game.com, george@game.com, " +
+                        "george@game.com");
 
     }
 }

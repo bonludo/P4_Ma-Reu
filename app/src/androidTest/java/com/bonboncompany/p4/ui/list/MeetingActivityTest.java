@@ -1,87 +1,99 @@
 package com.bonboncompany.p4.ui.list;
 
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.iterableWithSize;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
 
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
-
-import com.bonboncompany.p4.R;
-
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@LargeTest
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
+import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withResourceName;
+import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.core.IsNull.notNullValue;
+
+import androidx.test.core.app.ActivityScenario;
+import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import com.bonboncompany.p4.R;
+import com.bonboncompany.p4.data.MeetingRepository;
+
 @RunWith(AndroidJUnit4.class)
 public class MeetingActivityTest {
 
-    @Rule
-    public ActivityTestRule<MeetingActivity> mActivityTestRule = new ActivityTestRule<>(MeetingActivity.class);
+    private MeetingActivity actualActivityTest;
+    private MeetingRepository meetingRepository;
+
+
+    @Before
+    public void setUp() throws Exception {
+
+        ActivityScenario<MeetingActivity> mainActivity = ActivityScenario.launch(MeetingActivity.class);
+        mainActivity.onActivity(activity -> actualActivityTest = activity);
+
+//        int count = meetingRepository.getMeetingsLiveData().getValue().size();
+    }
 
     @Test
-    public void meetingActivityTest() {
-        ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.meeting_recyclerView),
-                        childAtPosition(
-                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                0)));
-        recyclerView.perform(actionOnItemAtPosition(0, click()));
+    public void Meeting_shouldNotBeEmpty() {
+        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed()))
+                .check(matches(hasMinimumChildCount(1)));
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.room_detail), withText("Salle : Luigi"),
-                        withParent(withParent(withId(R.id.meeting_detail))),
-                        isDisplayed()));
-        textView.check(matches(isDisplayed()));
-
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.room_detail), withText("Salle : Luigi"),
-                        withParent(withParent(withId(R.id.meeting_detail))),
-                        isDisplayed()));
-        textView2.check(matches(withText("Salle : Luigi")));
-
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.room_detail), withText("Salle : Luigi"),
-                        withParent(withParent(withId(R.id.meeting_detail))),
-                        isDisplayed()));
-        textView3.check(matches(withText("Salle : Luigi")));
     }
 
-    private static Matcher<View> childAtPosition(
-            final Matcher<View> parentMatcher, final int position) {
+    @Test
+    public void Meeting_OnclickedshouldAddNewMeeting() {
 
-        return new TypeSafeMatcher<View>() {
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("Child at position " + position + " in parent ");
-                parentMatcher.describeTo(description);
-            }
+        onView(withId(R.id.main_fab_add)).perform(click());
 
-            @Override
-            public boolean matchesSafely(View view) {
-                ViewParent parent = view.getParent();
-                return parent instanceof ViewGroup && parentMatcher.matches(parent)
-                        && view.equals(((ViewGroup) parent).getChildAt(position));
-            }
-        };
+        onView(withId(R.id.addmeetingtopic)).perform(replaceText("kong"), closeSoftKeyboard());
+
+        onView(withId(R.id.addparticipantmail)).perform(replaceText("kong@gmail.com")
+                , closeSoftKeyboard());
+
+        onView(withId(R.id.addButton)).perform(click());
+
+        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed()))
+                .check(matches(hasMinimumChildCount(1)));
+
     }
+
+    @Test
+    public void Meeting_deleteAction_shouldRemoveItem() {
+
+        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed()))
+                .check(matches(hasChildCount(8)));
+
+        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed()))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, new DeleteViewAction()));
+    }
+
+    @Test
+    public void Meeting_shouldShowDetailOnClickOnMeeting() {
+
+        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed())).perform(actionOnItemAtPosition(0, click()));
+
+        onView(allOf(withId(R.id.meetingtopic_detail))).check(matches(withText("Sujet : Réunion A")));
+
+    }
+
 }
