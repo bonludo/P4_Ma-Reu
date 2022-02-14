@@ -14,6 +14,8 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
+import static androidx.test.espresso.action.ViewActions.swipeUp;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
@@ -61,7 +63,7 @@ public class MeetingActivityTest {
     }
 
     @Test
-    public void Meeting_OnclickedshouldAddNewMeeting() {
+    public void Meeting_OnclickedshouldAddNewMeeting() throws InterruptedException {
 
         onView(withId(R.id.main_fab_add)).perform(click());
 
@@ -72,9 +74,13 @@ public class MeetingActivityTest {
 
         onView(withId(R.id.addButton)).perform(click());
 
-        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed()))
-                .check(matches(hasMinimumChildCount(1)));
-
+//        Thread.sleep(500);
+//
+//        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed())).perform(swipeUp());
+//
+//
+//        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed()))
+//                .check(matches(withText("kong@gmail.com")));
     }
 
     @Test

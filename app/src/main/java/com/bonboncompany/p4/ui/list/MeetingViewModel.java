@@ -62,7 +62,7 @@ public class MeetingViewModel extends ViewModel {
 
     }
 
-    private void combineRoom(@Nullable List<Meeting> meetings, @Nullable Room room) {
+    public void combineRoom(@Nullable List<Meeting> meetings, @Nullable Room room) {
 
         if (meetings == null) {
             return;
@@ -83,7 +83,7 @@ public class MeetingViewModel extends ViewModel {
         meetingListMediatorLiveData.setValue(meetingViewStateItems);
     }
 
-    private void combineHour(@Nullable List<Meeting> meetings, @Nullable LocalTime time) {
+    public void combineHour(@Nullable List<Meeting> meetings, @Nullable LocalTime time) {
         if (meetings == null) {
             return;
         }
@@ -112,7 +112,7 @@ public class MeetingViewModel extends ViewModel {
 
         String room = meeting.getRoom().toString().substring(0, 1).toUpperCase()
                 + meeting.getRoom().toString().substring(1).toLowerCase();
-        ;
+
 
         return topic + " - " + hour.getHour() + "h00" + " - " + room;
     }
