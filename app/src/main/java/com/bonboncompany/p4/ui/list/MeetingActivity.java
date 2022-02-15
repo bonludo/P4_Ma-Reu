@@ -82,5 +82,4 @@ public class MeetingActivity extends AppCompatActivity implements OnMeetingClick
     public void onDeleteMeetingClicked(long meetingId) {
         viewModel.onDeleteMeetingClicked(meetingId);
     }
-
 }

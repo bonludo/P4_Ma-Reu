@@ -29,7 +29,8 @@ public class DetailMeetingActivity extends AppCompatActivity {
 
         long meetingId = getIntent().getLongExtra(MEETING_ID, -1);
 
-        DetailMeetingViewModel viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(DetailMeetingViewModel.class);
+        DetailMeetingViewModel viewModel = new ViewModelProvider(this,
+                ViewModelFactory.getInstance()).get(DetailMeetingViewModel.class);
         viewModel.getMeetingById(meetingId);
 
         ImageView roomImageView = findViewById(R.id.imageroom_detail);

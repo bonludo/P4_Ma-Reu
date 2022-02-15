@@ -45,7 +45,7 @@ public class MeetingRepository {
         return meetingsLiveData;
     }
 
-    public Meeting addMeeting(
+    public void addMeeting(
             String meetingTopic,
             LocalTime time,
             Room room,
@@ -62,9 +62,7 @@ public class MeetingRepository {
                         participantMail
                 )
         );
-
         meetingsLiveData.setValue(meetings);
-        return null;
     }
 
     public Meeting getMeetingById (long meetingId) {
