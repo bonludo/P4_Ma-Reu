@@ -9,7 +9,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/meeting_detail"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
 
             <TextView
                 android:id="@+id/meetingtopic_detail"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:textSize="24sp"
@@ -34,7 +34,7 @@
 
             <TextView
                 android:id="@+id/room_detail"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:drawablePadding="8dp"
@@ -59,7 +59,7 @@
 
             <TextView
                 android:id="@+id/time_detail"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:textSize="20sp"
@@ -86,7 +86,7 @@
 
             <TextView
                 android:id="@+id/participant_detail"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="@string/participant"
@@ -98,7 +98,7 @@
 
             <TextView
                 android:id="@+id/mailparticipant_detail"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:textSize="12sp"

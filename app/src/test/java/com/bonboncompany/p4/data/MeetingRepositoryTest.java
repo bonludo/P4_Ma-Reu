@@ -36,7 +36,7 @@ public class MeetingRepositoryTest {
         // Given
         meetingRepository.getMeetingsLiveData().getValue().clear();
 
-
+        // When
         newMeetings();
 
         // Then
@@ -52,16 +52,11 @@ public class MeetingRepositoryTest {
         newMeetings();
         Meeting meetingToDelete = meetingRepository.getMeetingsLiveData().getValue().get(0);
 
-
-
-
         // When
         meetingRepository.deleteMeeting(meetingToDelete.getId());
 
         // Then
         assertFalse(meetingRepository.getMeetingsLiveData().getValue().contains(meetingToDelete));
-        assertFalse(meetingRepository.getMeetingsLiveData().getValue().isEmpty());
-
     }
 
 
@@ -76,7 +71,7 @@ public class MeetingRepositoryTest {
 
         // Then
         assertFalse(meetingRepository.getMeetingsLiveData().getValue().isEmpty());
-        assertEquals(2,meetingRepository.getMeetingsLiveData().getValue().size());
+        assertEquals(2, meetingRepository.getMeetingsLiveData().getValue().size());
     }
 
     @Test
@@ -85,9 +80,7 @@ public class MeetingRepositoryTest {
         // Given
         meetingRepository.getMeetingsLiveData().getValue().clear();
         meetingRepository.getMeetingsLiveData().getValue().addAll(sixMeeting());
-
         long position = 4;
-
 
         // Then
         assertEquals(meetingRepository.getMeetingsLiveData().getValue().get(4).getId(), meetingRepository.getMeetingById(position).getId());
@@ -118,7 +111,7 @@ public class MeetingRepositoryTest {
         return selected;
     }
 
-    private void  newMeetings() {
+    private void newMeetings() {
         meetingRepository.addMeeting(
                 "Réunion A",
                 LocalTime.of(8, 00),

@@ -51,7 +51,7 @@ public class MeetingViewModelTest {
 
         //Then
         assertEquals(viewModel.getMeetingListLiveData().getValue().size(), sizeTest);
-      
+
     }
 
     @Test
@@ -69,6 +69,7 @@ public class MeetingViewModelTest {
         //Then
         assertEquals(viewModel.getMeetingListLiveData().getValue().size(), sizeTest);
     }
+
 
     //Meeting for testing
     private List<Meeting> sixMeeting() {

@@ -23,14 +23,11 @@ import java.util.List;
 public class MeetingViewModel extends ViewModel {
 
 
-    private final MediatorLiveData<List<MeetingViewStateItem>> meetingListMediatorLiveData
-            = new MediatorLiveData<>();
-
-    private final MutableLiveData<Room> currentlySelectedRoom = new MutableLiveData<>();
-    private final MutableLiveData<LocalTime> chosenTimeSlot = new MutableLiveData<>();
-
+        private final MediatorLiveData<List<MeetingViewStateItem>> meetingListMediatorLiveData
+                = new MediatorLiveData<>();
+        private final MutableLiveData<Room> currentlySelectedRoom = new MutableLiveData<>();
+        private final MutableLiveData<LocalTime> chosenTimeSlot = new MutableLiveData<>();
     private final MeetingRepository meetingRepository;
-
 
     public MeetingViewModel(MeetingRepository meetingRepository) {
         this.meetingRepository = meetingRepository;
@@ -38,27 +35,14 @@ public class MeetingViewModel extends ViewModel {
         LiveData<List<Meeting>> meetingListLiveData = meetingRepository.getMeetingsLiveData();
 
 
-        meetingListMediatorLiveData.addSource(meetingListLiveData, new Observer<List<Meeting>>() {
-            @Override
-            public void onChanged(List<Meeting> meetings) {
-                combineRoom(meetings, currentlySelectedRoom.getValue());
-                combineHour(meetings, chosenTimeSlot.getValue());
-            }
+        meetingListMediatorLiveData.addSource(meetingListLiveData, meetings -> {
+            combineRoom(meetings, currentlySelectedRoom.getValue());
+            combineHour(meetings, chosenTimeSlot.getValue());
         });
 
-        meetingListMediatorLiveData.addSource(currentlySelectedRoom, new Observer<Room>() {
-            @Override
-            public void onChanged(Room room) {
-                combineRoom(meetingListLiveData.getValue(), room);
-            }
-        });
+        meetingListMediatorLiveData.addSource(currentlySelectedRoom, room -> combineRoom(meetingListLiveData.getValue(), room));
 
-        meetingListMediatorLiveData.addSource(chosenTimeSlot, new Observer<LocalTime>() {
-            @Override
-            public void onChanged(LocalTime time) {
-                combineHour(meetingListLiveData.getValue(), time);
-            }
-        });
+        meetingListMediatorLiveData.addSource(chosenTimeSlot, time -> combineHour(meetingListLiveData.getValue(), time));
 
     }
 
@@ -93,7 +77,7 @@ public class MeetingViewModel extends ViewModel {
             if (time == null || time.getHour() == meeting.getTime().getHour()) {
                 meetingViewStateItems.add(new MeetingViewStateItem(
                                 meeting.getId(),
-                                MeetingViewModel.this.getMeetingInfo(meeting),
+                                getMeetingInfo(meeting),
                                 meeting.getParticipantMail(),
                                 meeting.getRoom().getColor()
                         )
@@ -119,14 +103,10 @@ public class MeetingViewModel extends ViewModel {
 
     public void roomButtonClicked(Context context) {
 
-        CustomRoomSpinnerDialog.MyRoomDialogListener listener = new CustomRoomSpinnerDialog.MyRoomDialogListener() {
-            @Override
-            public void userSelectedAValue(Room value) {
-                Toast.makeText(context, "Réunion en salle "
-                        + value.toString().toLowerCase(), Toast.LENGTH_LONG).show();
-                onRoomChanged(value);
-            }
-
+        CustomRoomSpinnerDialog.MyRoomDialogListener listener = value -> {
+            Toast.makeText(context, "Réunion en salle "
+                    + value.toString().toLowerCase(), Toast.LENGTH_LONG).show();
+            onRoomChanged(value);
         };
         CustomRoomSpinnerDialog dialog = new CustomRoomSpinnerDialog(context, listener);
         dialog.show();
@@ -151,18 +131,11 @@ public class MeetingViewModel extends ViewModel {
         Toast.makeText(context, "Liste complète des réunions du jour", Toast.LENGTH_SHORT).show();
     }
 
-
     public void onRoomChanged(Room room) {
         currentlySelectedRoom.setValue(room);
     }
-
-    public void onHourChanged(LocalTime time) {
-        chosenTimeSlot.setValue(time);
-    }
-
-    public void onDeleteMeetingClicked(long meetingId) {
-        meetingRepository.deleteMeeting(meetingId);
-    }
+    public void onHourChanged(LocalTime time) { chosenTimeSlot.setValue(time); }
+    public void onDeleteMeetingClicked(long meetingId) { meetingRepository.deleteMeeting(meetingId); }
 
     public LiveData<List<MeetingViewStateItem>> getMeetingListLiveData() {
         return meetingListMediatorLiveData;
