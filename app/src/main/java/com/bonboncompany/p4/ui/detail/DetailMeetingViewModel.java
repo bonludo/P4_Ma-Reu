@@ -22,7 +22,7 @@ public class DetailMeetingViewModel extends ViewModel {
         return new DetailMeetingViewState(
                 meeting.getMeetingTopic(),
                 meeting.getTime().toString(),
-                capitalize(meeting.getRoom().toString()),
+                capitalize(meeting.getRoom().getName()),
                 meeting.getParticipantMail(),
                 meeting.getRoom().getIcon());
     }

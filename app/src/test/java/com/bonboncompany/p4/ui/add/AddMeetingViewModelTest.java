@@ -34,7 +34,7 @@ public class AddMeetingViewModelTest {
     }
 
     @Test
-    public void testAddMeetingWithAddButtonClicked() {
+    public void testAddMeetingWhenAddButtonClicked() {
 
         // Given
         meetingRepository.getMeetingsLiveData().getValue().clear();

@@ -102,7 +102,7 @@ public class MeetingRepositoryTest {
         selected.add(new Meeting(3, "banane", LocalTime.of(18, 00), Room.MARIO,
                 "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com," +
                         " george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"));
-        selected.add(new Meeting(4, "Bombe", LocalTime.of(18, 00), Room.LINK,
+        selected.add(new Meeting(4, "Bombe", LocalTime.of(18, 00), Room.LUIGI,
                 "george@yahoo.fr , henry@LIVE.fr, george@game.com, george@game.com," +
                         " george@game.com, george@game.com, george@game.com, george@game.com, george@game.com"));
         selected.add(new Meeting(5, "Circuit", LocalTime.of(8, 00), Room.ZELDA,

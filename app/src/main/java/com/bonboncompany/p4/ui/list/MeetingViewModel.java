@@ -23,10 +23,10 @@ import java.util.List;
 public class MeetingViewModel extends ViewModel {
 
 
-        private final MediatorLiveData<List<MeetingViewStateItem>> meetingListMediatorLiveData
-                = new MediatorLiveData<>();
-        private final MutableLiveData<Room> currentlySelectedRoom = new MutableLiveData<>();
-        private final MutableLiveData<LocalTime> chosenTimeSlot = new MutableLiveData<>();
+    private final MediatorLiveData<List<MeetingViewStateItem>> meetingListMediatorLiveData
+            = new MediatorLiveData<>();
+    private final MutableLiveData<Room> currentlySelectedRoom = new MutableLiveData<>();
+    private final MutableLiveData<LocalTime> chosenTimeSlot = new MutableLiveData<>();
     private final MeetingRepository meetingRepository;
 
     public MeetingViewModel(MeetingRepository meetingRepository) {
@@ -87,15 +87,17 @@ public class MeetingViewModel extends ViewModel {
         meetingListMediatorLiveData.setValue(meetingViewStateItems);
     }
 
+    private String capitalize(String name) {
+        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+    }
+
     public String getMeetingInfo(Meeting meeting) {
 
-        String topic = meeting.getMeetingTopic().substring(0, 1).toUpperCase()
-                + meeting.getMeetingTopic().substring(1).toLowerCase();
+        String topic = capitalize(meeting.getMeetingTopic());
 
         LocalTime hour = meeting.getTime();
 
-        String room = meeting.getRoom().toString().substring(0, 1).toUpperCase()
-                + meeting.getRoom().toString().substring(1).toLowerCase();
+        String room = capitalize(meeting.getRoom().getName());
 
 
         return topic + " - " + hour.getHour() + "h00" + " - " + room;
@@ -134,8 +136,14 @@ public class MeetingViewModel extends ViewModel {
     public void onRoomChanged(Room room) {
         currentlySelectedRoom.setValue(room);
     }
-    public void onHourChanged(LocalTime time) { chosenTimeSlot.setValue(time); }
-    public void onDeleteMeetingClicked(long meetingId) { meetingRepository.deleteMeeting(meetingId); }
+
+    public void onHourChanged(LocalTime time) {
+        chosenTimeSlot.setValue(time);
+    }
+
+    public void onDeleteMeetingClicked(long meetingId) {
+        meetingRepository.deleteMeeting(meetingId);
+    }
 
     public LiveData<List<MeetingViewStateItem>> getMeetingListLiveData() {
         return meetingListMediatorLiveData;

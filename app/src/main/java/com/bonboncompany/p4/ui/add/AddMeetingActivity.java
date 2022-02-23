@@ -46,13 +46,12 @@ public class AddMeetingActivity extends AppCompatActivity {
         Spinner roomSpinner = findViewById(R.id.spinnerRoom);
         TextInputEditText participantEditText = findViewById(R.id.addparticipantmail);
         Button addMeetingButton = findViewById(R.id.addButton);
-        timePicker= (TimePicker) findViewById(R.id.addtimePicker);
+        timePicker= findViewById(R.id.addtimePicker);
         timePicker.setIs24HourView(true); // Mode 24H
         timePicker.setMinute(0);
 
-        roomSpinner.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item,
-                Room.values()));
+        roomSpinner.setAdapter(new ArrayAdapter<Room>(this,
+                android.R.layout.simple_spinner_item,Room.values()));
 
         bindName(viewModel, topicEditText);
 
