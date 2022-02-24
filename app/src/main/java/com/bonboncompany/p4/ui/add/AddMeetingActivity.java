@@ -12,8 +12,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
-import android.widget.TimePicker;
 
 import com.bonboncompany.p4.R;
 import com.bonboncompany.p4.data.model.Room;
@@ -30,7 +30,7 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     private LocalTime time;
     private Room room;
-    TimePicker timePicker;
+    NumberPicker numberPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +46,16 @@ public class AddMeetingActivity extends AppCompatActivity {
         Spinner roomSpinner = findViewById(R.id.spinnerRoom);
         TextInputEditText participantEditText = findViewById(R.id.addparticipantmail);
         Button addMeetingButton = findViewById(R.id.addButton);
-        timePicker= findViewById(R.id.addtimePicker);
-        timePicker.setIs24HourView(true); // Mode 24H
-        timePicker.setMinute(0);
+        numberPicker = findViewById(R.id.adddatePicker);
 
-        roomSpinner.setAdapter(new ArrayAdapter<Room>(this,
-                android.R.layout.simple_spinner_item,Room.values()));
+        numberPicker.setMinValue(0);
+        numberPicker.setMaxValue(viewModel.data.length-1);
+        numberPicker.setDisplayedValues(viewModel.data);
+//        timePicker.setIs24HourView(true); // Mode 24H
+//        timePicker.setCurrentMinute(0);
+
+        roomSpinner.setAdapter(new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, Room.values()));
 
         bindName(viewModel, topicEditText);
 
@@ -99,17 +103,14 @@ public class AddMeetingActivity extends AppCompatActivity {
                                 TextInputEditText participantEditText,
                                 Button  addMeetingButton)
     {
-        addMeetingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                time = LocalTime.of(timePicker.getCurrentHour(), 0);
-                viewModel.onAddButtonClicked(
-                        topicEditText.getText().toString(),
-                        time,
-                        room,
-                        participantEditText.getText().toString()
-                );
-            }
+        addMeetingButton.setOnClickListener(v -> {
+            time = LocalTime.of(numberPicker.getValue() + 7, 0);
+            viewModel.onAddButtonClicked(
+                    topicEditText.getText().toString(),
+                    time,
+                    room,
+                    participantEditText.getText().toString()
+            );
         });
         viewModel.getIsSaveButtonEnabledLiveData().observe(this,
                 isSaveButtonEnabled -> addMeetingButton.setEnabled(isSaveButtonEnabled));

@@ -1,8 +1,5 @@
 package com.bonboncompany.p4.ui.add;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
@@ -38,26 +35,27 @@ public class AddMeetingViewModel extends ViewModel {
             isSaveButtonEnabledMutableLiveData.setValue(false);
         }
     }
-
+    String[] data = new String[]{"7 : 00", "8 : 00", "9 : 00", "10 : 00","11 : 00", "12 : 00"
+            , "13 : 00", "14 : 00", "15 : 00", "16 : 00", "17 : 00", "18 : 00", "19 : 00", "20 : 00"
+            , "21 : 00", "22 : 00", "23 : 00"};
     // single event close activity
     public SingleLiveEvent<Void> getCloseActivitySingleLiveEvent() {
         return closeActivitySingleLiveEvent;
     }
 
-
-        //method creation
-        public void onAddButtonClicked (
-                @NonNull String topic,
-                @Nullable LocalTime time,
-                @Nullable Room room,
-                @NonNull String participantMail
-    ){
-            meetingRepository.addMeeting(topic, time, room, participantMail);
-            closeActivitySingleLiveEvent.call();
-        }
-
-        public void onRoomSelected (Room selectedItem){
-            selectedRoom = selectedItem;
-        }
-
+    //method creation
+    public void onAddButtonClicked(
+            @NonNull String topic,
+            @Nullable LocalTime time,
+            @Nullable Room room,
+            @NonNull String participantMail
+    ) {
+        meetingRepository.addMeeting(topic, time, room, participantMail);
+        closeActivitySingleLiveEvent.call();
     }
+
+    public void onRoomSelected(Room selectedItem) {
+        selectedRoom = selectedItem;
+    }
+
+}
