@@ -111,7 +111,9 @@ public class MeetingActivityTest {
 
         onView(allOf(withId(R.id.refresh_all), isCompletelyDisplayed())).perform(click());
 
-        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed())).check(matches(hasChildCount(9)));
+        Thread.sleep(200);
+
+        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed())).check(matches(hasChildCount(8)));
     }
 
     @Test
@@ -132,7 +134,7 @@ public class MeetingActivityTest {
 
         onView(withId(R.id.addButton)).perform(click());
 
-        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed())).perform(scrollToPosition(9));
+        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed())).perform(scrollToPosition(8));
 
         onView(allOf(withId(R.id.item_list_mail_participant), withText("kong@gmail.com"),
                 withParent(withParent(withId(R.id.meeting_recyclerView))),
@@ -142,14 +144,10 @@ public class MeetingActivityTest {
     @Test
     public void Meeting_deleteAction_shouldRemoveItem() throws InterruptedException {
 
-        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed())).check(matches(hasChildCount(9)));
+        onView((withId(R.id.meeting_recyclerView))).check(matches(hasChildCount(8)));
 
         onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed()))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, new DeleteViewAction()));
-
-        Thread.sleep(200);
-
-        onView(allOf(withId(R.id.meeting_recyclerView), isCompletelyDisplayed())).check(matches(hasChildCount(8)));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
     }
 
     @Test
