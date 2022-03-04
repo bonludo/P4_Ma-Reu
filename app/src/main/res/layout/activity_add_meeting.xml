@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:ems="10"
-                android:hint="Salle : "
+                android:hint="@string/Salle"
                 tools:ignore="HardcodedText" />
 
             <Spinner

@@ -29,7 +29,9 @@ public class DetailMeetingViewState {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DetailMeetingViewState that = (DetailMeetingViewState) o;
-        return icon == that.icon && Objects.equals(meetingTopic, that.meetingTopic) && Objects.equals(time, that.time) && Objects.equals(room, that.room) && Objects.equals(participantMail, that.participantMail);
+        return icon == that.icon && Objects.equals(meetingTopic, that.meetingTopic)
+                && Objects.equals(time, that.time) && Objects.equals(room, that.room)
+                && Objects.equals(participantMail, that.participantMail);
     }
 
     @Override

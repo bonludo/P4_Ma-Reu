@@ -5,5 +5,14 @@
     <string name="topic_hour_room">topic_hour_room</string>
     <string name="add_new_meeting">add_new_meeting</string>
     <string name="participant">Participant</string>
-
+    <string name="Salle">Salle :</string>
+    <string name="reunion_a">Réunion à </string>
+    <string name="liste_complete">Liste complète des réunions du jour</string>
+    <string name="reunion_en_salle">Réunion en salle\ \:\ </string>
+    <string name="heure">heure</string>
+    <string name="reunion_adetail">Réunion à \:\ </string>
+    <string name="salledetail">Salle \:\ </string>
+    <string name="sujetdetail">Sujet \:\ </string>
+    <string name="h_for_hour">h</string>
+    <string name="tiret">\ \-\ </string>
 </resources>

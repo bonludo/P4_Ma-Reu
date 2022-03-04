@@ -20,6 +20,7 @@ public class MeetingAdapter extends ListAdapter<MeetingViewStateItem, MeetingAda
 
     private final OnMeetingClickedListener listener;
 
+
     public MeetingAdapter(OnMeetingClickedListener listener) {
         super(new ListMeetingItemCallback());
         this.listener = listener;

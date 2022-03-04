@@ -49,35 +49,32 @@ public class AddMeetingActivity extends AppCompatActivity {
         numberPicker = findViewById(R.id.adddatePicker);
 
         numberPicker.setMinValue(0);
-        numberPicker.setMaxValue(viewModel.data.length-1);
+        numberPicker.setMaxValue(viewModel.data.length - 1);
         numberPicker.setDisplayedValues(viewModel.data);
-//        timePicker.setIs24HourView(true); // Mode 24H
-//        timePicker.setCurrentMinute(0);
 
         roomSpinner.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, Room.values()));
 
         bindName(viewModel, topicEditText);
 
+        roomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-       roomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                room = (Room) roomSpinner.getSelectedItem();
+                viewModel.onRoomSelected((Room) roomSpinner.getSelectedItem());
+                //line 60 not utility for the moment
+            }
 
-           @Override
-           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               room = (Room) roomSpinner.getSelectedItem();
-               viewModel.onRoomSelected((Room) roomSpinner.getSelectedItem());
-               //line 60 not utility for the moment
-           }
-
-           @Override
-           public void onNothingSelected(AdapterView<?> parent) {
-           }
-       });
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
 
-        bindAddButton(viewModel,topicEditText,participantEditText, addMeetingButton);
+        bindAddButton(viewModel, topicEditText, participantEditText, addMeetingButton);
 
-        viewModel.getCloseActivitySingleLiveEvent().observe(this,aVoid -> finish());
+        viewModel.getCloseActivitySingleLiveEvent().observe(this, aVoid -> finish());
 
     }
 
@@ -98,11 +95,10 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
-    private void bindAddButton (AddMeetingViewModel viewModel,
-                                TextInputEditText topicEditText,
-                                TextInputEditText participantEditText,
-                                Button  addMeetingButton)
-    {
+    private void bindAddButton(AddMeetingViewModel viewModel,
+                               TextInputEditText topicEditText,
+                               TextInputEditText participantEditText,
+                               Button addMeetingButton) {
         addMeetingButton.setOnClickListener(v -> {
             time = LocalTime.of(numberPicker.getValue() + 7, 0);
             viewModel.onAddButtonClicked(

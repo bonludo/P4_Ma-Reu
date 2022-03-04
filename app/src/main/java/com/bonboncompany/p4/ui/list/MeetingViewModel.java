@@ -1,20 +1,21 @@
 package com.bonboncompany.p4.ui.list;
 
-import android.content.Context;
-import android.widget.Toast;
+
+import static android.content.res.Resources.getSystem;
+
+import android.content.res.Resources;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.bonboncompany.p4.R;
 import com.bonboncompany.p4.data.MeetingRepository;
 import com.bonboncompany.p4.data.model.Meeting;
 import com.bonboncompany.p4.data.model.Room;
-import com.bonboncompany.p4.ui.list.dialogfilter.CustomRoomSpinnerDialog;
-import com.bonboncompany.p4.ui.list.dialogfilter.CustomTimePickerDialog;
+import com.bonboncompany.p4.util.App;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -29,11 +30,11 @@ public class MeetingViewModel extends ViewModel {
     private final MutableLiveData<LocalTime> chosenTimeSlot = new MutableLiveData<>();
     private final MeetingRepository meetingRepository;
 
+
     public MeetingViewModel(MeetingRepository meetingRepository) {
         this.meetingRepository = meetingRepository;
 
         LiveData<List<Meeting>> meetingListLiveData = meetingRepository.getMeetingsLiveData();
-
 
         meetingListMediatorLiveData.addSource(meetingListLiveData, meetings -> {
             combineRoom(meetings, currentlySelectedRoom.getValue());
@@ -41,9 +42,7 @@ public class MeetingViewModel extends ViewModel {
         });
 
         meetingListMediatorLiveData.addSource(currentlySelectedRoom, room -> combineRoom(meetingListLiveData.getValue(), room));
-
         meetingListMediatorLiveData.addSource(chosenTimeSlot, time -> combineHour(meetingListLiveData.getValue(), time));
-
     }
 
     public void combineRoom(@Nullable List<Meeting> meetings, @Nullable Room room) {
@@ -92,45 +91,18 @@ public class MeetingViewModel extends ViewModel {
     }
 
     public String getMeetingInfo(Meeting meeting) {
-
+//      works but not testable (nullpointerException)
+//      String tiret = App.getContext().getString(R.string.tiret);
+//      String hourS = App.getContext().getString(R.string.h_for_hour);
+        String tiret = " _ ";
+        String hourS = " h ";
         String topic = capitalize(meeting.getMeetingTopic());
 
         LocalTime hour = meeting.getTime();
 
         String room = capitalize(meeting.getRoom().getName());
 
-
-        return topic + " - " + hour.getHour() + "h00" + " - " + room;
-    }
-
-    public void roomButtonClicked(Context context) {
-
-        CustomRoomSpinnerDialog.MyRoomDialogListener listener = value -> {
-            Toast.makeText(context, "Réunion en salle "
-                    + value.toString().toLowerCase(), Toast.LENGTH_LONG).show();
-            onRoomChanged(value);
-        };
-        CustomRoomSpinnerDialog dialog = new CustomRoomSpinnerDialog(context, listener);
-        dialog.show();
-    }
-
-    public void timeButtonClicked(Context context) {
-        CustomTimePickerDialog.MyTimeDialogListener listener = new CustomTimePickerDialog.MyTimeDialogListener() {
-            @Override
-            public void userSelectedAValue(LocalTime value) {
-                Toast.makeText(context, "Réunion à " + value.getHour()
-                        + " heure", Toast.LENGTH_LONG).show();
-                onHourChanged(value);
-            }
-        };
-        CustomTimePickerDialog dialog = new CustomTimePickerDialog(context, listener);
-        dialog.show();
-    }
-
-    public void refreshButtonClicked(Context context) {
-        onRoomChanged(null);
-        onHourChanged(null);
-        Toast.makeText(context, "Liste complète des réunions du jour", Toast.LENGTH_SHORT).show();
+        return topic + tiret + hour.getHour() + hourS + hour.getMinute() + hour.getMinute() + tiret + room;
     }
 
     public void onRoomChanged(Room room) {
