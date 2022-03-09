@@ -94,7 +94,7 @@ public class MeetingViewModel extends ViewModel {
 //      works but not testable (nullpointerException)
 //      String tiret = App.getContext().getString(R.string.tiret);
 //      String hourS = App.getContext().getString(R.string.h_for_hour);
-        String tiret = " _ ";
+        String tiret = " - ";
         String hourS = " h ";
         String topic = capitalize(meeting.getMeetingTopic());
 
